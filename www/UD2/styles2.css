@@ -1,0 +1,91 @@
+/* Estilos globales */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos del header */
+header {
+    background-color: #007BFF;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+/* Estilos del main */
+main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos de los fieldsets */
+fieldset {
+    border: 1px solid #007BFF;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+}
+
+legend {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #007BFF;
+}
+
+/* Estilos de los inputs */
+input[type="name"],
+input[type="tel"],
+select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+input[type="name"]:focus,
+input[type="tel"]:focus,
+select:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+/* Estilos del botón */
+button {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos del footer */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
