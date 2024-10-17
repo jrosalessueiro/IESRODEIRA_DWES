@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Formulario de Inscripción - DAW</title>
+    <title>AGENDA - DWES</title>
     <link rel="stylesheet" href="styles2.css">
 </head>
 <body>
     <header>
-        <h1>Inscripción al Ciclo de Desarrollo de Aplicaciones Web (DAW)</h1>
-        <p>Por favor, rellena el formulario a continuación para dar de alta a un alumno.</p>
+        <h1>Agenda</h1>
+        
     </header>
     
     <main>
