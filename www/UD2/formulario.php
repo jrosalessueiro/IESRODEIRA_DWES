@@ -14,10 +14,13 @@ function agregarContacto(&$agenda, $nombre, $telefono)
     // Comprobar si el nombre ya existe en la agenda
     if (!array_key_exists($nombre, $agenda) && !empty($telefono)) {
         $agenda[$nombre] = $telefono;
-    } else if(array_key_exists($nombre, $agenda)){
-        echo "<p>El nombre $nombre ya está en la agenda.</p>";
-    } else{
-        echo "<p>Introduzca un número de teléfono.</p>";
+        echo "<p>Se ha introducido el contacto " . $nombre . ", " . $telefono . "</p>";
+    } else if (array_key_exists($nombre, $agenda) && !empty($telefono)) {
+        $agenda[$nombre] = $telefono;
+        echo "<p>Se ha modificado el contacto " . $nombre . ", con el nuevo teléfono: " . $telefono . "</p>";
+    } else if (array_key_exists($nombre, $agenda) && empty($telefono)) {
+        unset($agenda[$nombre]);
+        echo "<p>Se ha borrado el elemento " . $nombre . "</p>";
     }
 }
 
@@ -30,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nombre']) && isset($_
     if (!empty($nombre) && !empty($telefono)) {
         agregarContacto($agenda, $nombre, $telefono);
     } else {
-        echo "<p style='color:red;'>Por favor, completa ambos campos.</p>";
+        echo "<p>Por favor, completa ambos campos.</p>";
     }
 }
 ?>
@@ -58,12 +61,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nombre']) && isset($_
             <fieldset>
                 <legend>Datos Agenda</legend>
                 <?php
-                function data($nombre)
+                function imprimirContactos($agenda)
                 {
-                    return "¡Hola, $nombre!";
+                    if (!empty($agenda)) {
+                        foreach ($agenda as $nombre => $telefono) {
+                            echo "<p>" . $nombre . "      " . $telefono . "</p>";
+                        }
+                    }
                 }
-
-                echo data("Carlos");
                 ?>
             </fieldset>
 
@@ -72,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nombre']) && isset($_
                 <label for="name">Nombre:</label>
                 <input type="name" id="name" name="name" required><br>
                 <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono" required><br>
+                <input type="tel" id="telefono" name="telefono"><br>
 
                 <button type="submit">Añadir Contacto</button>
                 <button type="submit">Limpiar Campos</button>
