@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nombre'])) {
 </head>
 <body>
     <header>
-        <h1>Agenda</h1>
+        <h1>Agenda DWES 2024-2025</h1>
     </header>
 
     <main>
