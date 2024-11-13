@@ -30,18 +30,6 @@ function gestionarContacto(&$agenda, $nombre, $telefono) {
     }
 }
 
-// Procesar el formulario si se envió
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nombre'])) {
-    $nombre = trim($_POST['nombre']);
-    $telefono = trim($_POST['telefono']);
-
-    if (!empty($nombre)) {
-        // Llamar a la función para gestionar el contacto
-        gestionarContacto($agenda, $nombre, $telefono);
-    } else {
-        echo "<p>Por favor, introduce un nombre válido.</p>";
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -55,6 +43,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nombre'])) {
 <body>
     <header>
         <h1>Agenda DWES 2024-2025</h1>
+<?php // Procesar el formulario si se envió
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nombre'])) {
+    $nombre = trim($_POST['nombre']);
+    $telefono = trim($_POST['telefono']);
+
+    if (!empty($nombre)) {
+        // Llamar a la función para gestionar el contacto
+        gestionarContacto($agenda, $nombre, $telefono);
+    } else {
+        echo "<p>Por favor, introduce un nombre válido.</p>";
+    }
+}
+?>
     </header>
 
     <main>
