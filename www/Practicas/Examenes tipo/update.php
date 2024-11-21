@@ -97,34 +97,51 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modificar Producto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
-<body>
-    <h2>Modificar Producto</h2>
+<body class="p-3 text-info-emphasis bg-info-subtle border border-primary-subtle rounded-3">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col">
+                <h2>Modificar Producto</h2>
+            </div>
+        </div>
+        <div class="row">
 
-    <!-- Formulario para modificar el producto -->
-    <form method="POST">
-        <p>
-            <label for="nombre">Nombre:</label><br>
-            <input type="text" id='nombre' name="nombre" required value='<?= $nombre ?>'>
-        </p>
-        <label for="nombreCorto">Nombre corto:</label><br>
-        <input type="text" id='nombreCorto' name="nombreCorto" required value='<?= $nombreCorto ?>'><br>
-        <label for="precio">Precio (€):</label><br>
-        <input type="number" id='precio' name="precio" step="0.01" required value='<?= $precio ?>'>
-        <label for="familia">Familia:</label><br>
-        <select id="familia" name="familia" required value='<?= $familia ?>'>
-            <?php foreach ($familias as $fam) { ?>
-                <option value="<?= $fam ?>" <?= $fam === $familia ? 'selected' : '' ?>><?= $fam ?></option>
-            <?php } ?>
-        </select>
-        <label for="descripcion">Descripción:</label><br>
-        <textarea name="descripcion" id="descripcion" required><?= $descripcion ?></textarea>
-        <input type="hidden" value="<?= $_GET['id'] ?>" name="id" />
-        <button type="submit">Aceptar</button>
-        <button type="reset">Limpiar</button>
-        <a href="listado.php">Volver</a>
-    </form>
+            <!-- Formulario para modificar el producto -->
+            <form method="POST">
+                <p>
+                    <label for="nombre">Nombre:</label><br>
+                    <input class="form-control" type="text" id='nombre' name="nombre" required value='<?= $nombre ?>'>
+                </p>
+                <div class="mb-3">
+                    <label class="form-label" for="nombreCorto">Nombre corto:</label><br>
+                    <input class="form-control" type="text" id='nombreCorto' name="nombreCorto" required value='<?= $nombreCorto ?>'><br>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="precio">Precio (€):</label><br>
+                    <input class="form-control" type="number" id='precio' name="precio" step="0.01" required value='<?= $precio ?>'>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="familia">Familia:</label><br>
+                    <select class="form-select" id="familia" name="familia" required value='<?= $familia ?>'>
+                        <?php foreach ($familias as $fam) { ?>
+                            <option value="<?= $fam ?>" <?= $fam === $familia ? 'selected' : '' ?>><?= $fam ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="descripcion">Descripción:</label><br>
+                    <textarea class="form-control" name="descripcion" id="descripcion" required><?= $descripcion ?></textarea>
+                </div>
+                <input type="hidden" value="<?= $_GET['id'] ?>" name="id" />
+                <button class="btn btn-primary btn-lg" type="submit">Aceptar</button>
+                <button class="btn btn-success btn-lg" type="reset">Limpiar</button>
+                <a class="btn btn-secondary btn-lg" href="listado.php">Volver</a>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>

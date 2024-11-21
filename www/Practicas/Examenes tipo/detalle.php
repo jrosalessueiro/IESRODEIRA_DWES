@@ -36,36 +36,45 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle Producto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
 </head>
 
-<body>
-    <h2>Detalle del Producto</h2>
-    <p>Producto <?= $_GET['id'] ?></p>
-    <table border="1">
-        <tr>
-            <th><?= $nombre ?></th>
-        </tr>
-        <tr>
-            <th>Codigo: <?= $_GET['id'] ?></th>
-        </tr>
-        <tr>
-            <th>Nombre: <?= $nombre ?></th>
-        </tr>
-        <tr>
-            <th>Nombre corto: <?= $nombreCorto ?></th>
-        </tr>
-        <tr>
-            <th>Código familia: <?= $familia ?></th>
-        </tr>
-        <tr>
-            <th>Precio (€): <?= $precio ?></th>
-        </tr>
-        <tr>
-            <th>Descripción: <?= $descripcion ?></th>
-        </tr>
+<body class="p-3 text-info-emphasis bg-info-subtle border border-primary-subtle rounded-3">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col">
+                <h2>Detalle del Producto</h2>
+            </div>
+        </div>
+        <div class="row">
 
-    </table>
-    <a href="listado.php">Volver</a>
+            <table>
+                <tr>
+                    <th><?= $nombre ?></th>
+                </tr>
+                <tr>
+                    <th>Codigo: <?= $_GET['id'] ?></th>
+                </tr>
+                <tr>
+                    <th>Nombre: <?= $nombre ?></th>
+                </tr>
+                <tr>
+                    <th>Nombre corto: <?= $nombreCorto ?></th>
+                </tr>
+                <tr>
+                    <th>Código familia: <?= $familia ?></th>
+                </tr>
+                <tr>
+                    <th>Precio (€): <?= $precio ?></th>
+                </tr>
+                <tr>
+                    <th>Descripción: <?= $descripcion ?></th>
+                </tr>
+            </table>
+        </div>
+        <a class="btn btn-secondary btn-lg" href="listado.php">Volver</a>
+    </div>
 </body>
 
 </html>

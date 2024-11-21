@@ -52,30 +52,52 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Producto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
-<body>
-    <h2>Crear Producto</h2>
-    <form method="POST">
-        <label for="nombre">Nombre:</label><br>
-        <input type="text" id='nombre' name="nombre" required>
-        <label for="nombreCorto">Nombre corto:</label><br>
-        <input type="text" id='nombreCorto' name="nombreCorto" required><br>
-        <label for="precio">Precio (€):</label><br>
-        <input type="number" id='precio' name="precio" step="0.01" required>
-        <label for="familia">Familia:</label><br>
-        <select id="familia" name="familia" required>
-            <?php while ($row = $stmt1->fetch(PDO::FETCH_ASSOC)) { ?>
-                <option value="<?= $row['familia'] ?>"><?= $row['familia'] ?></option>
-            <?php } ?>
-        </select>
-        <label for="descripcion">Descripción:</label><br>
-        <textarea name="descripcion" id="descripcion" required></textarea>
+<body class="p-3 text-info-emphasis bg-info-subtle border border-primary-subtle rounded-3">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col">
+                <h2>Crear Producto</h2>
+            </div>
+        </div>
+        <div class="row">
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre:</label><br>
+                    <input class="form-control" type="text" id='nombre' name="nombre" required>
+                </div>
+                <div class="mb-3">
+                    <label for="nombreCorto" class="form-label">Nombre corto:</label><br>
+                    <input class="form-control" type="text" id='nombreCorto' name="nombreCorto" required><br>
+                </div>
 
-        <button type="submit">Aceptar</button>
-        <button type="reset">Limpiar</button>
-        <a href="listado.php">Volver</a>
-    </form>
+                <div class="mb-3">
+                    <label for="precio" class="form-label">Precio (€):</label><br>
+                    <input class="form-control" type="number" id='precio' name="precio" step="0.01" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="familia" class="form-label">Familia:</label><br>
+                    <select class="form-select" id="familia" name="familia" required>
+                        <?php while ($row = $stmt1->fetch(PDO::FETCH_ASSOC)) { ?>
+                            <option value="<?= $row['familia'] ?>"><?= $row['familia'] ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="descripcion" class="form-label">Descripción:</label><br>
+                    <textarea class="form-control" name="descripcion" id="descripcion" required></textarea>
+                </div>
+
+                <button class="btn btn-primary btn-lg" type="submit">Aceptar</button>
+                <button class="btn btn-success btn-lg" type="reset">Limpiar</button>
+                <a class="btn btn-secondary btn-lg" href="listado.php">Volver</a>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>
