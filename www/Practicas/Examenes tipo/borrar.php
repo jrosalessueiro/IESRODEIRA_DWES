@@ -1,4 +1,9 @@
 <?php
+/* Tarea 04 DWES curso 2024/2025 IES RODEIRA
+    Autor: José Rosales Sueiro
+    Proyecto para acceso a una base de datos con PDO
+*/
+
 // Incluye el archivo de conexión a la base de datos
 require 'conexion.php';
 
