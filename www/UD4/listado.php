@@ -37,6 +37,7 @@ $pageTitle = 'Gestión de Productos';
                 <td>
                     <!-- Enlaces para actualizar o borrar el producto -->
                     <a class="btn btn-warning" href="update.php?id=<?= $producto['id'] ?>">Actualizar</a>
+                    <a class="btn btn-success" href="tiendas.php?id=<?= $producto['id'] ?>">Tiendas</a>
                     <a class="btn btn-danger" href="borrar.php?id=<?= $producto['id'] ?>">Borrar</a>
                 </td>
             </tr>

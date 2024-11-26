@@ -22,6 +22,21 @@ function getProductos(): array
     return $stmt->fetchAll();
 }
 
+function getTiendas(int $id): array
+{
+    $pdo = getConnection();
+    $stmt = $pdo->prepare('
+        SELECT nombre, tlf, unidades FROM tiendas, stocks WHERE tiendas.id = stocks.tienda AND stocks.producto = :id
+    ');
+
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+
+    $tiendas = $stmt->fetchAll();
+
+    return $tiendas;
+}
+
 function getProducto(int $id): array
 {
     $pdo = getConnection();
