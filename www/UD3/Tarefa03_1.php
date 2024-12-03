@@ -82,7 +82,7 @@ abstract class Persona
         return self::$contador;
     }
 
-    /**
+    /** 
      * Método abstracto para generar una persona aleatoriamente.
      * Este método debe ser implementado por las clases que extienden Persona.
      * 
