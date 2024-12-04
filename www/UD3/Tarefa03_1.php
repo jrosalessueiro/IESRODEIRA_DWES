@@ -420,6 +420,7 @@ class Profesor extends Persona
     private int $aniosServicio;
     private array $materias;
     private string $cargo;
+    private static int $contador = 0; // Contador estático para llevar el número de objetos creados
 
     public const CARGOS_VALIDOS = [
         "ninguno",
@@ -456,6 +457,7 @@ class Profesor extends Persona
         $this->aniosServicio = $aniosServicio;
         $this->materias = $materias;
         $this->cargo = $cargo;
+        self::$contador++;
     }
 
     public function getAniosServicio(): int{
@@ -528,6 +530,11 @@ class Profesor extends Persona
     public function __toString(): string{
         $materiasStr = implode(", ", $this->materias); // Convierte el array de materias en un string
         return parent::__toString() . ", con {$this->aniosServicio} años de servicio. Mi cargo es el de {$this->cargo} y las materias que imparto son {$materiasStr}.";
+    }
+
+    // Método estático que devuelve el número de objetos PersonalDeLimpieza creados
+    public static function numeroObjetosCreados(): int{
+        return self::$contador;
     }
 }
 // Clase AlumnadoESO que extiende de la clase Persona
