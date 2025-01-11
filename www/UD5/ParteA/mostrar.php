@@ -28,11 +28,37 @@ La aplicación se dividirá en 2 páginas:
 // Inicia la sesión
 session_start();
 
+// Verifica si las variables de sesión necesarias están definidas
+$idioma = $_SESSION['language'] ?? 'No establecido';
+$perfil = $_SESSION['public'] ?? 'No establecido';
+$zona = $_SESSION['zone'] ?? 'No establecido';
 
-// Obtén los valores del formulario
-$idioma = $_SESSION['language'] ?? null;
-$perfil = $_SESSION['public'] ?? null;
-$zona = $_SESSION['zone'] ?? null;
+// Variable para el mensaje
+$message = "";
+
+// Procesa los datos del formulario si se envió
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $action = $_POST['action'] ?? null; // Obtenemos la acción del botón enviado
+
+    if ($action === 'delete') {
+        if ($idioma === 'No establecido' || $perfil === 'No establecido' || $zona === 'No establecido') {
+            $message = "Debes fijar primero las preferencias.";
+        } else {
+            // Borra las preferencias (estableciéndolas como "No establecido")
+            $_SESSION['language'] = 'No establecido';
+            $_SESSION['public'] = 'No establecido';
+            $_SESSION['zone'] = 'No establecido';
+
+            // Actualiza las variables locales
+            $idioma = $_SESSION['language'];
+            $perfil = $_SESSION['public'];
+            $zona = $_SESSION['zone'];
+
+            // Establece el mensaje de confirmación
+            $message = "Preferencias borradas.";
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -51,19 +77,28 @@ $zona = $_SESSION['zone'] ?? null;
 
 <body>
     <div class="container mt-3">
-        <h1>Preferencias del Usuario</h1>
-        <div class="card" style="max-width: 500px;">
-            <div class="card-body"></div>
-            <ul class="list-group text-start">
+        <h1>Preferencias</h1>
+        <!-- Mensaje de confirmación -->
+        <?php if (!empty($message)): ?>
+            <div class="alert alert-success" style="max-width: 400px;" role="alert">
+                <?php echo htmlspecialchars($message); ?>
+            </div>
+        <?php endif; ?>
+
+        <!-- Muestra las preferencias -->
+        <div class="card shadow mb-3" style="max-width: 400px;">
+            <ul class="list-group list-group-flush">
                 <li class="list-group-item"><strong>Idioma:</strong> <?php echo htmlspecialchars($idioma); ?></li>
                 <li class="list-group-item"><strong>Perfil Público:</strong> <?php echo htmlspecialchars($perfil); ?></li>
                 <li class="list-group-item"><strong>Zona Horaria:</strong> <?php echo htmlspecialchars($zona); ?></li>
             </ul>
         </div>
-        <a href="index.php" class="btn btn-primary mt-3">Establecer</a>
-        <a href="preferencias.php" class="btn btn-secondary mt-3">Borrar</a>
-    </div>
 
+        <!-- Botones para establecer o borrar preferencias -->
+        <form method="POST">
+            <a href="preferencias.php" class="btn btn-secondary">Establecer</a>
+            <button type="submit" name="action" value="delete" class="btn btn-danger">Borrar</button>
+        </form>
     </div>
 </body>
 

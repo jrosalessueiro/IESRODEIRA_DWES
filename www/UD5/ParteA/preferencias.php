@@ -29,9 +29,9 @@ La aplicación se dividirá en 2 páginas:
 session_start();
 
 // Define los arrays originales de opciones
-$idiomas = ['Español', 'Inglés', 'Gallego', 'Alemán'];
-$perfiles = ['Público', 'Privado'];
-$zonas = ['GMT-2', 'GMT-1', 'GMT', 'GMT+1', 'GMT+2'];
+$idiomas = ['Español', 'Inglés', 'Gallego', 'Alemán', 'No Establecido'];
+$perfiles = ['Público', 'Privado', 'No Establecido'];
+$zonas = ['GMT-2', 'GMT-1', 'GMT', 'GMT+1', 'GMT+2', 'No Establecido'];
 
 // Variable para el mensaje
 $message = "";
@@ -41,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? null; // Obtén la acción del botón enviado
 
     if ($action === 'save') {
-        // Obtén los valores del formulario
-        $idioma = $_POST['language'] ?? null;
+        // Obtenemos los valores del formulario
+        $idioma = $_POST['language'] ?? null;   //Equivalente a $idioma = isset($_POST['language']) ? $_POST['language'] : null;
         $perfil = $_POST['public'] ?? null;
         $zona = $_POST['zone'] ?? null;
 
