@@ -32,9 +32,9 @@ function getDorsal(int $dorsal): bool
     $jugador = $stmt->fetch();
 
     if (!$jugador) {
-        return false;    
-    }else{
-    return true;
+        return false;
+    } else {
+        return true;
     }
 }
 
@@ -44,15 +44,39 @@ function createPlayer(array $data): void
 
     $pdo = getConnection();
     $stmt = $pdo->prepare('
-        INSERT INTO jugadores (nombre, apellidos, dorsal, posicion) 
-        VALUES (:nombre, :apellidos, :dorsal, :posicion)
+        INSERT INTO jugadores (nombre, apellidos, dorsal, posicion, barcode) 
+        VALUES (:nombre, :apellidos, :dorsal, :posicion, :barcode)
     ');
     $stmt->bindParam(':nombre', $data['nombre']);
     $stmt->bindParam(':apellidos', $data['apellidos']);
     $stmt->bindParam(':dorsal', $data['dorsal']);
     $stmt->bindParam(':posicion', $data['posicion']);
+    $stmt->bindParam(':barcode', $data['barcode']);
+
 
     $stmt->execute();
+}
+
+function createData(): void
+{
+    // Lista de jugadores a insertar
+    $jugadores = [
+        ['nombre' => 'Antonio', 'apellidos' => 'Gil Gil', 'dorsal' => 1, 'posicion' => 'Portero', 'barcode' => '0952945303398'],
+        ['nombre' => 'Ana', 'apellidos' => 'Hernandez Perez', 'dorsal' => 2, 'posicion' => 'Defensa Central', 'barcode' => '2406603743234'],
+        ['nombre' => 'Juan', 'apellidos' => 'Valdemoro Gil', 'dorsal' => 3, 'posicion' => 'Lateral Derecho', 'barcode' => '2829114057100'],
+        ['nombre' => 'Maria', 'apellidos' => 'Ruano Perez', 'dorsal' => 4, 'posicion' => 'Defensa Central', 'barcode' => '9745708466710']
+    ];
+
+    foreach ($jugadores as $jugador) {
+        try {
+            // Intenta crear el jugador
+            createPlayer($jugador);
+            echo "Jugador " . $jugador['nombre'] . " " . $jugador['apellidos'] . " añadido correctamente.<br>";
+        } catch (Exception $e) {
+            // Captura cualquier error y muestra el mensaje
+            echo "Error al añadir al jugador " . $jugador['nombre'] . " " . $jugador['apellidos'] . ": " . $e->getMessage() . "<br>";
+        }
+    }
 }
 
 function updatePlayer(int $id, array $data): void
@@ -62,7 +86,7 @@ function updatePlayer(int $id, array $data): void
     $pdo = getConnection();
     $stmt = $pdo->prepare('
         UPDATE jugadores 
-        SET nombre = :nombre, apellidos = :apellidos, dorsal = :dorsal, posicion = :posicion
+        SET nombre = :nombre, apellidos = :apellidos, dorsal = :dorsal, posicion = :posicion, barcode = :barcode
         WHERE id = :id
     ');
     $stmt->bindParam(':id', $id);
@@ -70,6 +94,7 @@ function updatePlayer(int $id, array $data): void
     $stmt->bindParam(':apellidos', $data['apellidos']);
     $stmt->bindParam(':dorsal', $data['dorsal']);
     $stmt->bindParam(':posicion', $data['posicion']);
+    $stmt->bindParam(':barcode', $data['barcode']);
 
     $stmt->execute();
 }
@@ -95,7 +120,7 @@ function validatePlayer(array $data): void
         throw new Exception('El dorsal es obligatorio');
     } elseif (!isset($data['posicion'])) {
         throw new Exception(message: 'La posicion es obligatoria');
-    } elseif (getDorsal($data['dorsal']) === true){
-        throw new Exception(message: 'El dorsal ya está ocupado por ' +$data['nombre'] + ' ' + $data['apellidos'] + ', elija otro dorsal');
-    } 
+    } elseif (getDorsal($data['dorsal']) === true) {
+        throw new Exception(message: 'El dorsal ya está ocupado por ' . $data['nombre'] . ' ' . $data['apellidos'] . ', elija otro dorsal');
+    }
 }

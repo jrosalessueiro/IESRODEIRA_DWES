@@ -27,15 +27,15 @@ $pageTitle = 'Crear Jugador';
 
 <!-- Contenido de la pagina -->
 <div class="row my-4">
-    <form method="POST">
+    <form method="POST" action="crearJugador.php">
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="nombre" class="form-label">Nombre:</label><br>
                 <input class="form-control" type="text" id='nombre' name="nombre" placeholder="Nombre" required>
             </div>
             <div class="col-md-6 mb-3">
-                <label for="nombreCorto" class="form-label">Apellidos:</label><br>
-                <input class="form-control" type="text" id='nombreCorto' name="nombreCorto" placeholder="Apellidos" required><br>
+                <label for="apellidos" class="form-label">Apellidos:</label><br>
+                <input class="form-control" type="text" id='apellidos' name="apellidos" placeholder="Apellidos" required><br>
             </div>
         </div>
         <div class="row">
@@ -58,8 +58,8 @@ $pageTitle = 'Crear Jugador';
                 </select>
             </div>
             <div class="col-md-4 mb-3">
-                <label for="codigoBarras" class="form-label">Código de Barras:</label><br>
-                <input class="form-control" type="text" id='codigoBarras' name="codigoBarras" placeholder="Código de Barras" readonly>
+                <label for="barcode" class="form-label">Código de Barras:</label><br>
+                <input class="form-control" type="text" id='barcode' name="barcode" placeholder="Código de Barras" required>
             </div>
         </div>
         <div class="row">
