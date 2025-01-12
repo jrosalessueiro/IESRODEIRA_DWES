@@ -4,18 +4,16 @@ require 'database.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        updateProducto($_POST['id'], $_POST);
+        updatePlayer($_POST['id'], $_POST);
         $alert = ['type' => 'success', 'message' => 'Producto actualizado correctamente!'];
     } catch (Exception $e) {
         $alert = ['type' => 'danger', 'message' => 'Error al actualizar el producto: ' . $e->getMessage()];
     }
 }
 
-$producto = getProducto($_GET['id']);
+$jugador = getPlayer($_GET['id']);
 
-$familias = getFamilias();
-
-$pageTitle = 'Modificar Producto';
+$pageTitle = 'Modificar Jugador';
 ?>
 
 <?php require 'header.php'; ?>
@@ -26,29 +24,29 @@ $pageTitle = 'Modificar Producto';
     <form method="POST">
         <p>
             <label for="nombre">Nombre:</label><br>
-            <input class="form-control" type="text" id='nombre' name="nombre" required value='<?= $producto['nombre'] ?>'>
+            <input class="form-control" type="text" id='nombre' name="nombre" required value='<?= $jugador['nombre'] ?>'>
         </p>
         <div class="mb-3">
-            <label class="form-label" for="nombreCorto">Nombre corto:</label><br>
-            <input class="form-control" type="text" id='nombreCorto' name="nombreCorto" required value='<?= $producto['nombre_corto'] ?>'><br>
+            <label class="form-label" for="apellidos">Apellidos:</label><br>
+            <input class="form-control" type="text" id='apellidos' name="apellidos" required value='<?= $jugador['apellidos'] ?>'><br>
         </div>
         <div class="mb-3">
-            <label class="form-label" for="precio">Precio (€):</label><br>
-            <input class="form-control" type="number" id='precio' name="precio" step="0.01" required value='<?= $producto['pvp'] ?>'>
+            <label class="form-label" for="dorsal">Dorsal:</label><br>
+            <input class="form-control" type="dorsal" id='dorsal' name="dorsal" required value='<?= $jugador['dorsal'] ?>'>
         </div>
         <div class="mb-3">
-            <label class="form-label" for="familia">Familia:</label><br>
-            <select class="form-select" id="familia" name="familia" required>
-                <?php foreach ($familias as $familia) { ?>
-                    <option value="<?= $familia['cod'] ?>" <?= $familia['cod'] === $producto['familia'] ? 'selected' : '' ?>><?= $familia['nombre'] ?></option>
+            <label class="form-label" for="posicion">Posición:</label><br>
+            <select class="form-select" id="posicion" name="posicion" required>
+                <?php foreach ($posiciones as $posicion) { ?>
+                    <option value="<?= $posicion['cod'] ?>" <?= $posicion['cod'] === $jugador['posicion'] ? 'selected' : '' ?>><?= $posicion['nombre'] ?></option>
                 <?php } ?>
             </select>
         </div>
         <div class="mb-3">
-            <label class="form-label" for="descripcion">Descripción:</label><br>
-            <textarea class="form-control" name="descripcion" id="descripcion" required><?= $producto['descripcion'] ?></textarea>
-        </div>
-        <input type="hidden" value="<?= $producto['id'] ?>" name="id"/>
+        <label for="codigoBarras" class="form-label">Código de Barras:</label><br>
+                <input class="form-control" type="text" id='codigoBarras' name="codigoBarras" placeholder="Código de Barras" readonly>
+            </div>
+        <input type="hidden" value="<?= $jugador['id'] ?>" name="id"/>
         <button class="btn btn-primary btn-lg" type="submit">Aceptar</button>
         <button class="btn btn-success btn-lg" type="reset">Limpiar</button>
         <a class="btn btn-secondary btn-lg" href="listado.php">Volver</a>

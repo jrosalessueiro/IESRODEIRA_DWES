@@ -4,7 +4,7 @@ require 'database.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        createProducto($_POST);
+        createPlayer($_POST);
         $alert = ['type' => 'success', 'message' => 'Producto creado correctamente!'];
     } catch (Exception $e) {
         $alert = ['type' => 'danger', 'message' => 'Error al crear el producto: ' . $e->getMessage()];

@@ -4,7 +4,7 @@ require 'database.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        deleteProducto($_POST['id']);
+        deletePlayer($_POST['id']);
         $alert = ['type' => 'success', 'message' => 'Producto eliminado correctamente!'];
         // Redirigir a la lista de productos después de borrar uno.
         header('Location: listado.php');
@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$producto = getProducto($_GET['id']);
+$producto = getPlayer($_GET['id']);
 
 $pageTitle = 'Borrar Producto';
 ?>

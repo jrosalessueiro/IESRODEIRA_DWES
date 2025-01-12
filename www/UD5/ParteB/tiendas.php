@@ -2,7 +2,7 @@
 
 require 'database.php';
 
-$producto = getProducto($_GET['id']);
+$producto = getPlayer($_GET['id']);
 $tiendas = getTiendas($_GET['id']);
 
 $pageTitle = 'Tiendas';

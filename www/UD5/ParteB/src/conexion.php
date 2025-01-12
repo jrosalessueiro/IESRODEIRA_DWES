@@ -15,7 +15,7 @@ function getConnection(): ?PDO
 
     // Configuración de la base de datos
     $host = 'localhost';      // Nombre o dirección del servidor de base de datos
-    $dbname = 'proyecto';     // Nombre de la base de datos a la que nos queremos conectar
+    $dbname = 'practicaunidad5';     // Nombre de la base de datos a la que nos queremos conectar
     $username = 'gestor';     // Nombre de usuario para autenticar la conexión
     $password = 'secreto';    // Contraseña del usuario de la base de datos
     $charset = 'utf8mb4';     // Codificación de caracteres (más adecuada para caracteres especiales)
