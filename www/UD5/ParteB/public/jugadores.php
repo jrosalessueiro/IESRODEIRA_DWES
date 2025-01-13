@@ -1,14 +1,12 @@
 <?php 
 
 require __DIR__ . '/../src/database.php';
+$pageTitle = 'Listado Jugadores';
+
 require __DIR__ . '/../src/header.php';
 require __DIR__ . '/../src/alert.php';
 
-
-
 $jugadores = getAllPlayers();
-
-$pageTitle = 'Listado de Jugadores';
 ?>
 
 <!-- Contenido de la pagina -->
