@@ -20,6 +20,14 @@ function getPlayer(int $id): array
     return $jugador;
 }
 
+function getAllPlayers(): array
+{
+    $pdo = getConnection();
+    $stmt = $pdo->query('SELECT * FROM jugadores'); // Obtiene todos los jugadores
+    return $stmt->fetchAll(PDO::FETCH_ASSOC); // Devuelve un array asociativo
+}
+
+
 function getDorsal(int $dorsal): bool
 {
     $pdo = getConnection();
@@ -123,4 +131,39 @@ function validatePlayer(array $data): void
     } elseif (getDorsal($data['dorsal']) === true) {
         throw new Exception(message: 'El dorsal ya está ocupado por ' . $data['nombre'] . ' ' . $data['apellidos'] . ', elija otro dorsal');
     }
+}
+
+function generateCode(): string
+{
+    $aleatorio12 = rand(0, 999999999999);
+
+    $code12 = (string) str_pad($aleatorio12, 12, '0', STR_PAD_LEFT);
+    $cifras = str_split($code12);
+
+    $impares = 0;
+    $pares = 0;
+
+    for ($i = 0; $i < 11; $i++) {
+        if ($i % 2 === 0) {
+            $impares += $i * $cifras[$i];
+        } else {
+            $pares += $i * $cifras[$i];
+        }
+    }
+
+    $resultado = $pares + $impares;
+    $valor = 0;
+
+    for ($j = $resultado; $j = $resultado + 10; $j++) {
+        if ($j % 10 === 0) {
+            $valor = $j;
+            exit;
+        }
+    }
+
+    array_push($cifras, $valor);
+
+    $code13 = implode('', $cifras);
+
+    return $code13;
 }

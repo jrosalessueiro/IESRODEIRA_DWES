@@ -59,7 +59,7 @@ $pageTitle = 'Crear Jugador';
             </div>
             <div class="col-md-4 mb-3">
                 <label for="barcode" class="form-label">Código de Barras:</label><br>
-                <input class="form-control" type="text" id='barcode' name="barcode" placeholder="Código de Barras" required>
+                <input class="form-control" type="text" id="barcode" name="barcode" placeholder="Código de Barras" readonly>
             </div>
         </div>
         <div class="row">
@@ -68,7 +68,7 @@ $pageTitle = 'Crear Jugador';
                 <button class="btn btn-primary btn-md" type="submit">Crear</button>
                 <button class="btn btn-success btn-md" type="reset">Limpiar</button>
                 <a class="btn btn-secondary btn-md" href="listado.php">Volver</a>
-                <a class="btn btn-danger btn-md" href="generarCode.php">Generar Barcode</a>
+                <button type="button" class="btn btn-danger btn-md" onclick="generateBarcode()">Generar Barcode</button>
             </div>
         </div>
     </form>
