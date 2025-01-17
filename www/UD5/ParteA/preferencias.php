@@ -132,6 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="d-flex gap-2">
                     <a href="mostrar.php" class="btn btn-primary">Mostrar Preferencias</a>
                     <button type="submit" name="action" value="save" class="btn btn-secondary">Establecer Preferencias</button>
+                    <a href="cerrar.php" class="btn btn-danger">Cerrar Sesión</a>
                 </div>
             </form>
         </div>
