@@ -25,41 +25,42 @@ La aplicación se dividirá en 2 páginas:
     Se valorará el uso de Bootstrap y Font Awesome para los estilos.
     */
 
-// Inicia la sesión
-session_start();
+include 'opciones.php';
 
 // Verifica si las variables de sesión necesarias están definidas
-$idioma = $_SESSION['language'] ?? 'No establecido';
-$perfil = $_SESSION['public'] ?? 'No establecido';
-$zona = $_SESSION['zone'] ?? 'No establecido';
-
-// Variable para el mensaje
-$message = "";
+$idioma = isset($_SESSION['language']) ? obtenerTexto($idiomas, $_SESSION['language']) : 'No establecido';
+$perfil = isset($_SESSION['public']) ? obtenerTexto($perfiles, $_SESSION['public']) : 'No establecido';
+$zona = isset($_SESSION['zone']) ? obtenerTexto($zonas, $_SESSION['zone']) : 'No establecido';
 
 // Procesa los datos del formulario si se envió
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? null; // Obtenemos la acción del botón enviado
 
     if ($action === 'delete') {
-        if ($idioma === 'No establecido' || $perfil === 'No establecido' || $zona === 'No establecido') {
+        // Comprobamos por el ID "0" en lugar del texto "No Establecido"
+        if (
+            $_SESSION['language'] == 0 ||
+            $_SESSION['public'] == 0 ||
+            $_SESSION['zone'] == 0
+        ) {
             $alert = [
-                'type' => 'danger', 
+                'type' => 'danger',
                 'message' => 'Debes fijar primero las preferencias.',
             ];
         } else {
-            // Borra las preferencias (estableciéndolas como "No establecido")
-            $_SESSION['language'] = 'No establecido';
-            $_SESSION['public'] = 'No establecido';
-            $_SESSION['zone'] = 'No establecido';
+            // Borra las preferencias (estableciéndolas como "No Establecido" usando el ID 0)
+            $_SESSION['language'] = 0; 
+            $_SESSION['public'] = 0; 
+            $_SESSION['zone'] = 0; 
 
             // Actualiza las variables locales
-            $idioma = $_SESSION['language'];
-            $perfil = $_SESSION['public'];
-            $zona = $_SESSION['zone'];
+            $idioma = obtenerTexto($idiomas, $_SESSION['language']);
+            $perfil = obtenerTexto($perfiles, $_SESSION['public']);
+            $zona = obtenerTexto($zonas, $_SESSION['zone']);
 
             // Establece el mensaje de confirmación
             $alert = [
-                'type' => 'success', 
+                'type' => 'success',
                 'message' => 'Preferencias borradas.',
             ];
         }
@@ -84,10 +85,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="container mt-3">
         <h1>Preferencias</h1>
+        
         <!-- Mensaje de confirmación -->
-         
         <?php include 'alert.php'; ?>
-
 
         <!-- Muestra las preferencias -->
         <div class="card shadow mb-3" style="max-width: 400px;">

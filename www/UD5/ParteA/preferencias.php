@@ -25,13 +25,7 @@ La aplicación se dividirá en 2 páginas:
     Se valorará el uso de Bootstrap y Font Awesome para los estilos.
     */
 
-// Inicia la sesión
-session_start();
-
-// Define los arrays originales de opciones
-$idiomas = ['Español', 'Inglés', 'Gallego', 'Alemán', 'No Establecido'];
-$perfiles = ['Público', 'Privado', 'No Establecido'];
-$zonas = ['GMT-2', 'GMT-1', 'GMT', 'GMT+1', 'GMT+2', 'No Establecido'];
+include 'opciones.php';
 
 // Variable para el mensaje
 $message = "";
@@ -40,7 +34,6 @@ $message = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? null; // Obtén la acción del botón enviado
 
-    if ($action === 'save') {
         // Obtenemos los valores del formulario
         $idioma = $_POST['language'] ?? null;   //Equivalente a $idioma = isset($_POST['language']) ? $_POST['language'] : null;
         $perfil = $_POST['public'] ?? null;
@@ -53,15 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Establece el mensaje de alerta
         $alert = [
-            'type' => 'success', // Alerta de éxito
+            'type' => 'success',
             'message' => 'Preferencias guardadas correctamente.',
         ];
-    } elseif ($action === 'show') {
-        // Redirige al archivo preferencias.php
-        header('Location: mostrar.php');
-        exit;
     }
-}
 ?>
 
 <!DOCTYPE html>
@@ -89,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="card shadow p-4" style="max-width: 400px; width: 100%;">
             <h3 class="text-center mb-4">Preferencias Usuario</h3>
-            
+
             <?php include 'alert.php'; ?>
 
             <form method="POST">
@@ -101,9 +89,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </span>
                         <select class="form-select" id="language" name="language">
                             <?php foreach ($idiomas as $idioma): ?>
-                                <option value="<?php echo strtolower($idioma); ?>"
-                                    <?php echo isset($_SESSION['language']) && $_SESSION['language'] === strtolower($idioma) ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($idioma); ?>
+                                <option value="<?php echo $idioma['id']; ?>"
+                                    <?php echo isset($_SESSION['language']) && $_SESSION['language'] === $idioma['id'] ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($idioma['texto']); ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -117,9 +105,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </span>
                         <select class="form-select" id="public" name="public">
                             <?php foreach ($perfiles as $perfil): ?>
-                                <option value="<?php echo strtolower($perfil); ?>"
-                                    <?php echo isset($_SESSION['public']) && $_SESSION['public'] === strtolower($perfil) ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($perfil); ?>
+                                <option value="<?php echo $perfil['id']; ?>"
+                                    <?php echo isset($_SESSION['public']) && $_SESSION['public'] === $perfil['id'] ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($perfil['texto']); ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -133,16 +121,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </span>
                         <select class="form-select" id="zone" name="zone">
                             <?php foreach ($zonas as $zona): ?>
-                                <option value="<?php echo $zona; ?>"
-                                    <?php echo isset($_SESSION['zone']) && $_SESSION['zone'] === $zona ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($zona); ?>
+                                <option value="<?php echo $zona['id']; ?>"
+                                    <?php echo isset($_SESSION['zone']) && $_SESSION['zone'] === $zona['id'] ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($zona['texto']); ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
                 <div class="d-flex gap-2">
-                    <button type="submit" name="action" value="show" class="btn btn-primary">Mostrar Preferencias</button>
+                    <a href="mostrar.php" class="btn btn-primary">Mostrar Preferencias</a>
                     <button type="submit" name="action" value="save" class="btn btn-secondary">Establecer Preferencias</button>
                 </div>
             </form>
