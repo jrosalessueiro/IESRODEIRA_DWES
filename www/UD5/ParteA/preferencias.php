@@ -51,8 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['public'] = $perfil;
         $_SESSION['zone'] = $zona;
 
-        // Establece el mensaje de confirmación
-        $message = "Preferencias guardadas correctamente.";
+        // Establece el mensaje de alerta
+        $alert = [
+            'type' => 'success', // Alerta de éxito
+            'message' => 'Preferencias guardadas correctamente.',
+        ];
     } elseif ($action === 'show') {
         // Redirige al archivo preferencias.php
         header('Location: mostrar.php');
@@ -86,11 +89,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="card shadow p-4" style="max-width: 400px; width: 100%;">
             <h3 class="text-center mb-4">Preferencias Usuario</h3>
-            <?php if (!empty($message)): ?>
-                <div class="alert alert-success" role="alert">
-                    <?php echo htmlspecialchars($message); ?>
-                </div>
-            <?php endif; ?>
+            
+            <?php include 'alert.php'; ?>
+
             <form method="POST">
                 <div class="mb-3">
                     <label for="language" class="form-label">Idioma</label>

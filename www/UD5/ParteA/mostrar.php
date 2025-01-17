@@ -42,7 +42,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($action === 'delete') {
         if ($idioma === 'No establecido' || $perfil === 'No establecido' || $zona === 'No establecido') {
-            $message = "Debes fijar primero las preferencias.";
+            $alert = [
+                'type' => 'danger', 
+                'message' => 'Debes fijar primero las preferencias.',
+            ];
         } else {
             // Borra las preferencias (estableciéndolas como "No establecido")
             $_SESSION['language'] = 'No establecido';
@@ -55,7 +58,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $zona = $_SESSION['zone'];
 
             // Establece el mensaje de confirmación
-            $message = "Preferencias borradas.";
+            $alert = [
+                'type' => 'success', 
+                'message' => 'Preferencias borradas.',
+            ];
         }
     }
 }
@@ -79,11 +85,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container mt-3">
         <h1>Preferencias</h1>
         <!-- Mensaje de confirmación -->
-        <?php if (!empty($message)): ?>
-            <div class="alert alert-success" style="max-width: 400px;" role="alert">
-                <?php echo htmlspecialchars($message); ?>
-            </div>
-        <?php endif; ?>
+         
+        <?php include 'alert.php'; ?>
+
 
         <!-- Muestra las preferencias -->
         <div class="card shadow mb-3" style="max-width: 400px;">

@@ -1,0 +1,14 @@
+{
+    "name": "vendor/ud5",
+    "description": "Tarea unidad 5 dwes",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "joserosalessueiro",
+            "email": "joserossue@iesrodeira.gal"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
