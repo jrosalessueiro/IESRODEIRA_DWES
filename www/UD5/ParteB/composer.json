@@ -14,5 +14,7 @@
             "email": "joserossue@iesrodeira.gal"
         }
     ],
-    "require": {}
+    "require": {
+        "picqer/php-barcode-generator": "^2.4"
+    }
 }

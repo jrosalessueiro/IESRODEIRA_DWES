@@ -1,6 +1,7 @@
 <?php
 
 require 'conexion.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 function getPlayer(int $id): array
 {
@@ -132,7 +133,6 @@ function validatePlayer(array $data): void
         throw new Exception(message: 'El dorsal ya está ocupado por ' . $data['nombre'] . ' ' . $data['apellidos'] . ', elija otro dorsal');
     }
 }
-require __DIR__ . '/../vendor/autoload.php';
 
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
