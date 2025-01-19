@@ -132,38 +132,22 @@ function validatePlayer(array $data): void
         throw new Exception(message: 'El dorsal ya está ocupado por ' . $data['nombre'] . ' ' . $data['apellidos'] . ', elija otro dorsal');
     }
 }
+require __DIR__ . '/../vendor/autoload.php';
 
-function generateCode(): string
+use Picqer\Barcode\BarcodeGeneratorPNG;
+
+// Definir un código de barras por defecto
+define('code', '123456789012');
+
+function generateCode()
 {
-    $aleatorio12 = rand(0, 999999999999);
+    // Crear un generador de código de barras
+    $generator = new BarcodeGeneratorPNG();
+    
+    // Usar el valor predeterminado de la constante
+    $codigo = code;
 
-    $code12 = (string) str_pad($aleatorio12, 12, '0', STR_PAD_LEFT);
-    $cifras = str_split($code12);
-
-    $impares = 0;
-    $pares = 0;
-
-    for ($i = 0; $i < 11; $i++) {
-        if ($i % 2 === 0) {
-            $impares += $i * $cifras[$i];
-        } else {
-            $pares += $i * $cifras[$i];
-        }
-    }
-
-    $resultado = $pares + $impares;
-    $valor = 0;
-
-    for ($j = $resultado; $j = $resultado + 10; $j++) {
-        if ($j % 10 === 0) {
-            $valor = $j;
-            exit;
-        }
-    }
-
-    array_push($cifras, $valor);
-
-    $code13 = implode('', $cifras);
-
-    return $code13;
+    // Generar y devolver el código de barras como imagen PNG
+    header('Content-Type: image/png');
+    echo $generator->getBarcode($codigo, $generator::TYPE_CODE_128);
 }

@@ -1,19 +1,19 @@
 <?php return array(
     'root' => array(
-        'name' => 'vendor/ud5',
+        'name' => 'pepe/parte-b',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'c114bd8693041c2fd5369db53b4ebc4f160f5da0',
+        'reference' => 'eead7e403158724be7038a1808ea8919ef80de3f',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        'vendor/ud5' => array(
+        'pepe/parte-b' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'c114bd8693041c2fd5369db53b4ebc4f160f5da0',
+            'reference' => 'eead7e403158724be7038a1808ea8919ef80de3f',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

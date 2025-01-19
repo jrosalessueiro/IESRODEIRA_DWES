@@ -1,14 +1,18 @@
 {
-    "name": "vendor/ud5",
-    "description": "Tarea unidad 5 dwes",
+    "name": "pepe/parte-b",
+    "description": "Tarea UD5 DWES PArte B",
     "type": "project",
     "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Pepe\\ParteB\\": "src/"
+        }
+    },
     "authors": [
         {
             "name": "joserosalessueiro",
             "email": "joserossue@iesrodeira.gal"
         }
     ],
-    "minimum-stability": "stable",
     "require": {}
 }

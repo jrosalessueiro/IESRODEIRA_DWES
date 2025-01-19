@@ -67,7 +67,7 @@ $pageTitle = 'Crear Jugador';
 
                 <button class="btn btn-primary btn-md" type="submit">Crear</button>
                 <button class="btn btn-success btn-md" type="reset">Limpiar</button>
-                <a class="btn btn-secondary btn-md" href="listado.php">Volver</a>
+                <a class="btn btn-secondary btn-md" href="index.php">Volver</a>
                 <button type="button" class="btn btn-danger btn-md" onclick="generateBarcode()">Generar Barcode</button>
             </div>
         </div>
