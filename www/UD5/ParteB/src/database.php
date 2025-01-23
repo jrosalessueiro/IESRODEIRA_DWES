@@ -53,14 +53,14 @@ function createPlayer(array $data): void
 
     $pdo = getConnection();
     $stmt = $pdo->prepare('
-        INSERT INTO jugadores (nombre, apellidos, dorsal, posicion, barcode) 
-        VALUES (:nombre, :apellidos, :dorsal, :posicion, :barcode)
+        INSERT INTO jugadores (nombre, apellidos, dorsal, posicion, code) 
+        VALUES (:nombre, :apellidos, :dorsal, :posicion, :code)
     ');
     $stmt->bindParam(':nombre', $data['nombre']);
     $stmt->bindParam(':apellidos', $data['apellidos']);
     $stmt->bindParam(':dorsal', $data['dorsal']);
     $stmt->bindParam(':posicion', $data['posicion']);
-    $stmt->bindParam(':barcode', $data['barcode']);
+    $stmt->bindParam(':code', $data['code']);
 
 
     $stmt->execute();
@@ -70,10 +70,10 @@ function createData(): void
 {
     // Lista de jugadores a insertar
     $jugadores = [
-        ['nombre' => 'Antonio', 'apellidos' => 'Gil Gil', 'dorsal' => 1, 'posicion' => 'Portero', 'barcode' => '0952945303398'],
-        ['nombre' => 'Ana', 'apellidos' => 'Hernandez Perez', 'dorsal' => 2, 'posicion' => 'Defensa Central', 'barcode' => '2406603743234'],
-        ['nombre' => 'Juan', 'apellidos' => 'Valdemoro Gil', 'dorsal' => 3, 'posicion' => 'Lateral Derecho', 'barcode' => '2829114057100'],
-        ['nombre' => 'Maria', 'apellidos' => 'Ruano Perez', 'dorsal' => 4, 'posicion' => 'Defensa Central', 'barcode' => '9745708466710']
+        ['nombre' => 'Antonio', 'apellidos' => 'Gil Gil', 'dorsal' => 1, 'posicion' => 'Portero', 'code' => '0952945303398'],
+        ['nombre' => 'Ana', 'apellidos' => 'Hernandez Perez', 'dorsal' => 2, 'posicion' => 'Defensa Central', 'code' => '2406603743234'],
+        ['nombre' => 'Juan', 'apellidos' => 'Valdemoro Gil', 'dorsal' => 3, 'posicion' => 'Lateral Derecho', 'code' => '2829114057100'],
+        ['nombre' => 'Maria', 'apellidos' => 'Ruano Perez', 'dorsal' => 4, 'posicion' => 'Defensa Central', 'code' => '9745708466710']
     ];
 
     foreach ($jugadores as $jugador) {
@@ -95,7 +95,7 @@ function updatePlayer(int $id, array $data): void
     $pdo = getConnection();
     $stmt = $pdo->prepare('
         UPDATE jugadores 
-        SET nombre = :nombre, apellidos = :apellidos, dorsal = :dorsal, posicion = :posicion, barcode = :barcode
+        SET nombre = :nombre, apellidos = :apellidos, dorsal = :dorsal, posicion = :posicion, code = :code
         WHERE id = :id
     ');
     $stmt->bindParam(':id', $id);
@@ -103,7 +103,7 @@ function updatePlayer(int $id, array $data): void
     $stmt->bindParam(':apellidos', $data['apellidos']);
     $stmt->bindParam(':dorsal', $data['dorsal']);
     $stmt->bindParam(':posicion', $data['posicion']);
-    $stmt->bindParam(':barcode', $data['barcode']);
+    $stmt->bindParam(':code', $data['code']);
 
     $stmt->execute();
 }
@@ -134,20 +134,3 @@ function validatePlayer(array $data): void
     }
 }
 
-use Picqer\Barcode\BarcodeGeneratorPNG;
-
-// Definir un código de barras por defecto
-define('code', '123456789012');
-
-function generateCode()
-{
-    // Crear un generador de código de barras
-    $generator = new BarcodeGeneratorPNG();
-    
-    // Usar el valor predeterminado de la constante
-    $codigo = code;
-
-    // Generar y devolver el código de barras como imagen PNG
-    header('Content-Type: image/png');
-    echo $generator->getBarcode($codigo, $generator::TYPE_CODE_128);
-}

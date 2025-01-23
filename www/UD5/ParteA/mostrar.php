@@ -39,10 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'delete') {
         // Comprobamos por el ID "0" en lugar del texto "No Establecido"
         if (
-            $_SESSION['language'] == 0 ||
-            $_SESSION['public'] == 0 ||
-            $_SESSION['zone'] == 0
-        ) {
+            $_SESSION['language'] == 0 || $_SESSION['public'] == 0 || $_SESSION['zone'] == 0) {
             $alert = [
                 'type' => 'danger',
                 'message' => 'Debes fijar primero las preferencias.',

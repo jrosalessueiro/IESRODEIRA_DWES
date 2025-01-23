@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__ . '/../src/database.php';
+require __DIR__ . '/../public/generarCode.php';
 
 $posiciones = [
     ['cod' => '1', 'nombre' => 'Portero'],
@@ -59,7 +60,7 @@ $pageTitle = 'Crear Jugador';
             </div>
             <div class="col-md-4 mb-3">
                 <label for="barcode" class="form-label">Código de Barras:</label><br>
-                <input class="form-control" type="text" id="barcode" name="barcode" placeholder="Código de Barras" readonly>
+                <input class="form-control" type="text" id="barcode" name="barcode" placeholder="Código de Barras" readonly value="<?= generateCode() ?>">
             </div>
         </div>
         <div class="row">
@@ -68,7 +69,19 @@ $pageTitle = 'Crear Jugador';
                 <button class="btn btn-primary btn-md" type="submit">Crear</button>
                 <button class="btn btn-success btn-md" type="reset">Limpiar</button>
                 <a class="btn btn-secondary btn-md" href="index.php">Volver</a>
-                <button type="button" class="btn btn-danger btn-md" onclick="generateCode()">Generar Barcode</button>
+                <a class="btn btn-danger btn-md" href="generarCode.php">Generar codigo</a>
+                <button type="button" class="btn btn-danger btn-md" onclick="generateBarcode()">Generar Barcode</button>
+                <img id="barcodeImage" alt="Código de barras generado" style="display: none; margin-top: 10px;">
+
+                <script>
+                    function generateBarcode() {
+                        const input = document.getElementById('barcode');
+                        const codigo = input.value.trim() || '123456789012'; // Valor predeterminado si el campo está vacío
+                        const image = document.getElementById('barcodeImage');
+                        image.src = `generarCodigoBarras.php?codigo=${codigo}`;
+                        image.style.display = 'block';
+                    }
+                </script>
             </div>
         </div>
     </form>

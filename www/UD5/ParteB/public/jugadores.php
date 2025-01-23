@@ -34,7 +34,7 @@ $jugadores = getAllPlayers();
                 <td><?= htmlspecialchars($jugador['apellidos'] . ', ' . $jugador['nombre']) ?></td>
                 <td><?= htmlspecialchars($jugador['posicion']) ?></td>
                 <td><?= $jugador['dorsal'] ? htmlspecialchars($jugador['dorsal']) : 'Sin Asignar' ?></td>
-                <td><?= htmlspecialchars($jugador['barcode']) ?></td>
+                <td><?= htmlspecialchars($jugador['code']) ?></td>
             </tr>
         <?php } ?>
         </tbody>
