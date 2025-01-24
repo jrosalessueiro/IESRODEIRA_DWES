@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Pepe\\ParteB\\": "src/"
+            "Dwes5B\\": "src/"
         }
     },
     "authors": [
@@ -16,6 +16,9 @@
     ],
     "require": {
         "milon/barcode": "^11.0",
-        "fakerphp/faker": "^1.24"
+        "fakerphp/faker": "^1.24",
+        "jenssegers/blade": "^2.0",
+        "illuminate/view": "10.48.10"
+        
     }
 }

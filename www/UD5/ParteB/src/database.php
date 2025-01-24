@@ -1,8 +1,13 @@
 <?php
 
-require 'conexion.php';
+// Incluir los archivos necesarios
+require_once 'Conection.php';  // Para la conexión a la base de datos
+require_once 'Jugador.php';    // Para el manejo de los objetos de jugador
+
+// Incluir el autoload de Composer para gestionar las dependencias
 require __DIR__ . '/../vendor/autoload.php';
 
+// Definir las posiciones de los jugadores con sus respectivos códigos y nombres
 const POSICIONES = [
     '1' => ['cod' => 1, 'nombre' => 'Portero'],
     '2' => ['cod' => 2, 'nombre' => 'Lateral Derecho'],
@@ -19,155 +24,76 @@ const POSICIONES = [
     '13' => ['cod' => 13, 'nombre' => 'Interior Derecha'],
 ];
 
+// Función para obtener todas las posiciones disponibles
 function getPositions(): array
 {
     return POSICIONES;
 }
 
+// Función para obtener una posición por su código
 function getPositionByCod(string $cod): ?array
 {
-    return POSICIONES[$cod] ?? null;
+    return POSICIONES[$cod] ?? null;  // Devuelve la posición si existe, o null si no
 }
 
+// Obtener un jugador por su código de barras
 function getPlayerByBarcode(string $code): array|false
 {
-    $pdo = getConnection();
-    $stmt = $pdo->prepare('
-        SELECT * FROM jugadores WHERE code = :code
-    ');
-    $stmt->bindParam(':code', $code);
-    $stmt->execute();
-
-    $jugador = $stmt->fetch();
-
-    return $jugador;
+    return Jugador::getPlayerByBarcode($code);  // Llama al método estático de la clase Jugador
 }
 
+// Obtener todos los jugadores de la base de datos
 function getAllPlayers(): array
 {
-    $pdo = getConnection();
-    $stmt = $pdo->query('SELECT * FROM jugadores'); // Obtiene todos los jugadores
-    return $stmt->fetchAll(PDO::FETCH_ASSOC); // Devuelve un array asociativo
+    $pdo = Conection::getConnection();  // Obtener la conexión PDO
+    $stmt = $pdo->query('SELECT * FROM jugadores');  // Realiza la consulta SQL para obtener todos los jugadores
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);  // Devuelve todos los jugadores como un array asociativo
 }
 
-
+// Obtener un jugador por su dorsal (número de camiseta)
 function getPlayerByDorsal(int $dorsal): array|false
 {
-    $pdo = getConnection();
-    $stmt = $pdo->prepare('
-        SELECT * FROM jugadores WHERE dorsal = :dorsal
-    ');
-    $stmt->bindParam(':dorsal', $dorsal);
-    $stmt->execute();
-
-    $jugador = $stmt->fetch();
-
-    return $jugador;
+    return Jugador::getPlayerByDorsal($dorsal);  // Llama al método estático de la clase Jugador
 }
 
+// Función para crear un nuevo jugador
 function createPlayer(array $data): void
 {
-    validatePlayer($data);
-
-    $pdo = getConnection();
-    $stmt = $pdo->prepare('
-        INSERT INTO jugadores (nombre, apellidos, dorsal, posicion, code) 
-        VALUES (:nombre, :apellidos, :dorsal, :posicion, :code)
-    ');
-    $stmt->bindParam(':nombre', $data['nombre']);
-    $stmt->bindParam(':apellidos', $data['apellidos']);
-    $stmt->bindParam(':dorsal', $data['dorsal']);
-    $stmt->bindParam(':posicion', $data['posicion']);
-    $stmt->bindParam(':code', $data['code']);
-
-
-    $stmt->execute();
+    Jugador::create($data);  // Llama al método estático de la clase Jugador para crear el jugador
 }
 
+// Crear datos de prueba para los jugadores
 function createData(): void
 {
-    $faker = Faker\Factory::create('es-ES');
+    // Usamos Faker para generar datos falsos
+    $faker = Faker\Factory::create('es_ES');
 
-    for ($i = 0; $i = 14; $i++) {
+    // Generar 15 jugadores de prueba
+    for ($i = 0; $i <= 14; $i++) {
         try {
+            // Crear un jugador con datos aleatorios
             $jugador = [
-                'nombre' => $faker->firstname,
-                'apellidos' =>  $faker->lastName . ' ' . $faker->lastName,
-                'dorsal' => $faker->numberBetween(1, 99),
-                'posicion' => $faker->numberBetween(1, 13),
-                'code' => $faker->ean13(),
+                'nombre' => $faker->firstName,  // Nombre del jugador
+                'apellidos' => $faker->lastName . ' ' . $faker->lastName,  // Apellidos del jugador
+                'posicion' => $faker->numberBetween(1, 13),  // Posición aleatoria entre 1 y 13
             ];
-            // Intenta crear el jugador
-            createPlayer($jugador);
+
+            // Asegurar que el dorsal sea único
+            do {
+                $jugador['dorsal'] = $faker->numberBetween(1, 20);  // Generar un dorsal aleatorio
+            } while (getPlayerByDorsal($jugador['dorsal']));  // Verificar si el dorsal ya existe
+
+            // Asegurar que el código de barras sea único
+            do {
+                $jugador['code'] = $faker->ean13();  // Generar un código de barras único
+            } while (getPlayerByBarcode($jugador['code']));  // Verificar si el código ya existe
+
+            // Intentar crear el jugador
+            createPlayer($jugador);  // Crear el jugador en la base de datos
             echo "Jugador " . $jugador['nombre'] . " " . $jugador['apellidos'] . " añadido correctamente.<br>";
         } catch (Exception $e) {
-            // Captura cualquier error y muestra el mensaje
+            // Si ocurre un error, capturarlo y mostrar el mensaje
             echo "Error al añadir al jugador " . $jugador['nombre'] . " " . $jugador['apellidos'] . ": " . $e->getMessage() . "<br>";
         }
     }
 }
-
-function validatePlayer(array $data): void
-{
-    if (!isset($data['nombre'])) {
-        throw new Exception('El nombre es obligatorio');
-    } elseif (!isset($data['apellidos'])) {
-        throw new Exception('Los apellidos son obligatorios');
-    } elseif (!isset($data['code'])) {
-        throw new Exception('El código de barras es obligatorio');
-    } elseif (!isset($data['posicion'])) {
-        throw new Exception(message: 'La posicion es obligatoria');
-    } elseif (isset($data['dorsal']) && getPlayerByDorsal($data['dorsal'])) {
-        throw new Exception(message: 'El dorsal ya está ocupado por ' . $data['nombre'] . ' ' . $data['apellidos'] . ', elija otro dorsal');
-    }
-}
-
-/*function updatePlayer(int $id, array $data): void
-{
-    validatePlayer($data);
-
-    $pdo = getConnection();
-    $stmt = $pdo->prepare('
-        UPDATE jugadores 
-        SET nombre = :nombre, apellidos = :apellidos, dorsal = :dorsal, posicion = :posicion, code = :code
-        WHERE id = :id
-    ');
-    $stmt->bindParam(':id', $id);
-    $stmt->bindParam(':nombre', $data['nombre']);
-    $stmt->bindParam(':apellidos', $data['apellidos']);
-    $stmt->bindParam(':dorsal', $data['dorsal']);
-    $stmt->bindParam(':posicion', $data['posicion']);
-    $stmt->bindParam(':code', $data['code']);
-
-    $stmt->execute();
-}
-
-function deletePlayer(int $id): void
-{
-    $pdo = getConnection();
-    $stmt = $pdo->prepare('
-        DELETE FROM jugadores WHERE id = :id
-    ');
-    $stmt->bindParam(':id', $id);
-
-    $stmt->execute();
-}
-    
-function getPlayer(int $id): array
-{
-    $pdo = getConnection();
-    $stmt = $pdo->prepare('
-        SELECT * FROM jugadores WHERE id = :id
-    ');
-    $stmt->bindParam(':id', $id);
-    $stmt->execute();
-
-    $jugador = $stmt->fetch();
-
-    if (!$jugador) {
-        throw new Exception('Jugador no encontrado');
-    }
-
-    return $jugador;
-}
-    */

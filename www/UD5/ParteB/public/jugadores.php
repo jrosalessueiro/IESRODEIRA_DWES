@@ -1,52 +1,23 @@
-<?php 
+<?php
 
+// Importa la clase BarcodeManager (gestión de códigos de barras)
+use Dwes5B\BarcodeManager;
+// Importa la clase Blade para usar el motor de plantillas
+use Jenssegers\Blade\Blade;
+
+// Incluye las funciones relacionadas con la base de datos
 require __DIR__ . '/../src/database.php';
-$pageTitle = 'Listado Jugadores';
 
-require __DIR__ . '/../src/header.php';
-require __DIR__ . '/../src/alert.php';
-
+// Obtiene todos los jugadores desde la base de datos
 $jugadores = getAllPlayers();
 
-function printCode(string $code): string {
-    $d = new \Milon\Barcode\DNS1D();
-    $d->setStorPath(__DIR__.'/../cache/');
+// Crea una instancia de BarcodeManager para gestionar los códigos de barras
+$barcodeManager = new BarcodeManager();
 
-    return $d->getBarcodeHTML($code, 'EAN13');
-}
+// Crea una instancia de Blade, especificando las rutas de las vistas y el directorio de caché
+$blade = new Blade(__DIR__.'/../views', __DIR__.'/../cache');
+
+// Renderiza la vista 'vjugadores', pasando los datos de jugadores y el gestor de códigos de barras como variables
+echo $blade->make('vjugadores', ['jugadores' => $jugadores, 'barcodeManager' => $barcodeManager])->render();
+
 ?>
-
-<!-- Contenido de la pagina -->
-<div class="row my-4">
-    <div class="col">
-        <!-- Enlace para crear un nuevo producto -->
-        <a class="btn btn-success btn-lg" href="fcrear.php">+Nuevo Jugador</a>
-    </div>
-</div>
-
-<div class="row my-4 text-center">
-    <table class="table">
-        <thead>
-        <tr class="table-primary">
-            <th>Nombre Completo</th>
-            <th>Posición</th>
-            <th>Dorsal</th>
-            <th>Código de Barras</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($jugadores as $jugador) { ?>
-            <tr>
-                <!-- Enlace al detalle del producto, pasando su ID como parámetro -->
-                <td><?= htmlspecialchars($jugador['apellidos'] . ', ' . $jugador['nombre']) ?></td>
-                <td><?= htmlspecialchars(getPositionByCod($jugador['posicion'])['nombre']) ?></td>
-                <td><?= $jugador['dorsal'] ? htmlspecialchars($jugador['dorsal']) : 'Sin Asignar' ?></td>
-                <td><?= printCode($jugador['code']) ?></td>
-            </tr>
-        <?php } ?>
-        </tbody>
-    </table>
-</div>
-
-
-<?php require __DIR__ . '/../src/footer.php';?>
