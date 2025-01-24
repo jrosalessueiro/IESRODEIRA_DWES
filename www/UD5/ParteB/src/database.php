@@ -3,20 +3,42 @@
 require 'conexion.php';
 require __DIR__ . '/../vendor/autoload.php';
 
-function getPlayer(int $id): array
+const POSICIONES = [
+    '1' => ['cod' => 1, 'nombre' => 'Portero'],
+    '2' => ['cod' => 2, 'nombre' => 'Lateral Derecho'],
+    '3' => ['cod' => 3, 'nombre' => 'Lateral Izquierdo'],
+    '4' => ['cod' => 4, 'nombre' => 'Central'],
+    '5' => ['cod' => 5, 'nombre' => 'Extremo Derecho'],
+    '6' => ['cod' => 6, 'nombre' => 'Extremo Izquierdo'],
+    '7' => ['cod' => 7, 'nombre' => 'Medio Centro'],
+    '8' => ['cod' => 8, 'nombre' => 'MediaPunta'],
+    '9' => ['cod' => 9, 'nombre' => 'Delantero Centro'],
+    '10' => ['cod' => 10, 'nombre' => 'Carrilero Derecha'],
+    '11' => ['cod' => 11, 'nombre' => 'Carrilero Izquierda'],
+    '12' => ['cod' => 12, 'nombre' => 'Interior Izquierda'],
+    '13' => ['cod' => 13, 'nombre' => 'Interior Derecha'],
+];
+
+function getPositions(): array
+{
+    return POSICIONES;
+}
+
+function getPositionByCod(string $cod): ?array
+{
+    return POSICIONES[$cod] ?? null;
+}
+
+function getPlayerByBarcode(string $code): array|false
 {
     $pdo = getConnection();
     $stmt = $pdo->prepare('
-        SELECT * FROM jugadores WHERE id = :id
+        SELECT * FROM jugadores WHERE code = :code
     ');
-    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':code', $code);
     $stmt->execute();
 
     $jugador = $stmt->fetch();
-
-    if (!$jugador) {
-        throw new Exception('Jugador no encontrado');
-    }
 
     return $jugador;
 }
@@ -29,7 +51,7 @@ function getAllPlayers(): array
 }
 
 
-function getDorsal(int $dorsal): bool
+function getPlayerByDorsal(int $dorsal): array|false
 {
     $pdo = getConnection();
     $stmt = $pdo->prepare('
@@ -40,11 +62,7 @@ function getDorsal(int $dorsal): bool
 
     $jugador = $stmt->fetch();
 
-    if (!$jugador) {
-        return false;
-    } else {
-        return true;
-    }
+    return $jugador;
 }
 
 function createPlayer(array $data): void
@@ -68,16 +86,17 @@ function createPlayer(array $data): void
 
 function createData(): void
 {
-    // Lista de jugadores a insertar
-    $jugadores = [
-        ['nombre' => 'Antonio', 'apellidos' => 'Gil Gil', 'dorsal' => 1, 'posicion' => 'Portero', 'code' => '0952945303398'],
-        ['nombre' => 'Ana', 'apellidos' => 'Hernandez Perez', 'dorsal' => 2, 'posicion' => 'Defensa Central', 'code' => '2406603743234'],
-        ['nombre' => 'Juan', 'apellidos' => 'Valdemoro Gil', 'dorsal' => 3, 'posicion' => 'Lateral Derecho', 'code' => '2829114057100'],
-        ['nombre' => 'Maria', 'apellidos' => 'Ruano Perez', 'dorsal' => 4, 'posicion' => 'Defensa Central', 'code' => '9745708466710']
-    ];
+    $faker = Faker\Factory::create('es-ES');
 
-    foreach ($jugadores as $jugador) {
+    for ($i = 0; $i = 14; $i++) {
         try {
+            $jugador = [
+                'nombre' => $faker->firstname,
+                'apellidos' =>  $faker->lastName . ' ' . $faker->lastName,
+                'dorsal' => $faker->numberBetween(1, 99),
+                'posicion' => $faker->numberBetween(1, 13),
+                'code' => $faker->ean13(),
+            ];
             // Intenta crear el jugador
             createPlayer($jugador);
             echo "Jugador " . $jugador['nombre'] . " " . $jugador['apellidos'] . " añadido correctamente.<br>";
@@ -88,7 +107,22 @@ function createData(): void
     }
 }
 
-function updatePlayer(int $id, array $data): void
+function validatePlayer(array $data): void
+{
+    if (!isset($data['nombre'])) {
+        throw new Exception('El nombre es obligatorio');
+    } elseif (!isset($data['apellidos'])) {
+        throw new Exception('Los apellidos son obligatorios');
+    } elseif (!isset($data['code'])) {
+        throw new Exception('El código de barras es obligatorio');
+    } elseif (!isset($data['posicion'])) {
+        throw new Exception(message: 'La posicion es obligatoria');
+    } elseif (isset($data['dorsal']) && getPlayerByDorsal($data['dorsal'])) {
+        throw new Exception(message: 'El dorsal ya está ocupado por ' . $data['nombre'] . ' ' . $data['apellidos'] . ', elija otro dorsal');
+    }
+}
+
+/*function updatePlayer(int $id, array $data): void
 {
     validatePlayer($data);
 
@@ -118,19 +152,22 @@ function deletePlayer(int $id): void
 
     $stmt->execute();
 }
-
-function validatePlayer(array $data): void
+    
+function getPlayer(int $id): array
 {
-    if (!isset($data['nombre'])) {
-        throw new Exception('El nombre es obligatorio');
-    } elseif (!isset($data['apellidos'])) {
-        throw new Exception('Los apellidos son obligatorios');
-    } elseif (!isset($data['dorsal'])) {
-        throw new Exception('El dorsal es obligatorio');
-    } elseif (!isset($data['posicion'])) {
-        throw new Exception(message: 'La posicion es obligatoria');
-    } elseif (getDorsal($data['dorsal']) === true) {
-        throw new Exception(message: 'El dorsal ya está ocupado por ' . $data['nombre'] . ' ' . $data['apellidos'] . ', elija otro dorsal');
-    }
-}
+    $pdo = getConnection();
+    $stmt = $pdo->prepare('
+        SELECT * FROM jugadores WHERE id = :id
+    ');
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
 
+    $jugador = $stmt->fetch();
+
+    if (!$jugador) {
+        throw new Exception('Jugador no encontrado');
+    }
+
+    return $jugador;
+}
+    */

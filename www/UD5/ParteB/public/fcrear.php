@@ -1,23 +1,9 @@
 <?php
 
 require __DIR__ . '/../src/database.php';
-require __DIR__ . '/../public/generarCode.php';
+session_start();
 
-$posiciones = [
-    ['cod' => '1', 'nombre' => 'Portero'],
-    ['cod' => '2', 'nombre' => 'Lateral Derecho'],
-    ['cod' => '3', 'nombre' => 'Lateral Izquierdo'],
-    ['cod' => '4', 'nombre' => 'Central'],
-    ['cod' => '5', 'nombre' => 'Extremo Derecho'],
-    ['cod' => '6', 'nombre' => 'Extremo Izquierdo'],
-    ['cod' => '7', 'nombre' => 'Medio Centro'],
-    ['cod' => '8', 'nombre' => 'MediaPunta'],
-    ['cod' => '9', 'nombre' => 'Delantero Centro'],
-    ['cod' => '10', 'nombre' => 'Carrilero Derecha'],
-    ['cod' => '11', 'nombre' => 'Carrilero Izquierda'],
-    ['cod' => '12', 'nombre' => 'Interior Izquierda'],
-    ['cod' => '13', 'nombre' => 'Interior Derecha']
-];
+$posiciones = getPositions();
 
 $pageTitle = 'Crear Jugador';
 ?>
@@ -43,7 +29,7 @@ $pageTitle = 'Crear Jugador';
 
             <div class="col-md-4 mb-3">
                 <label for="dorsal" class="form-label">Dorsal:</label><br>
-                <select class="form-select" id="dorsal" name="dorsal" required>
+                <select class="form-select" id="dorsal" name="dorsal">
                     <option value="" disabled selected>Dorsal</option>
                     <?php for ($i = 1; $i <= 99; $i++): ?>
                         <option value="<?= $i ?>"><?= $i ?></option>
@@ -59,8 +45,9 @@ $pageTitle = 'Crear Jugador';
                 </select>
             </div>
             <div class="col-md-4 mb-3">
-                <label for="barcode" class="form-label">Código de Barras:</label><br>
-                <input class="form-control" type="text" id="barcode" name="barcode" placeholder="Código de Barras" readonly value="<?= generateCode() ?>">
+                <label for="code" class="form-label">Código de Barras:</label><br>
+                <input class="form-control" type="text" id="code" name="code" placeholder="Código de Barras" readonly
+                    value="<?php echo $_SESSION['codigo'] ?? '-'; unset($_SESSION['codigo']); ?>">
             </div>
         </div>
         <div class="row">
@@ -69,19 +56,7 @@ $pageTitle = 'Crear Jugador';
                 <button class="btn btn-primary btn-md" type="submit">Crear</button>
                 <button class="btn btn-success btn-md" type="reset">Limpiar</button>
                 <a class="btn btn-secondary btn-md" href="index.php">Volver</a>
-                <a class="btn btn-danger btn-md" href="generarCode.php">Generar codigo</a>
-                <button type="button" class="btn btn-danger btn-md" onclick="generateBarcode()">Generar Barcode</button>
-                <img id="barcodeImage" alt="Código de barras generado" style="display: none; margin-top: 10px;">
-
-                <script>
-                    function generateBarcode() {
-                        const input = document.getElementById('barcode');
-                        const codigo = input.value.trim() || '123456789012'; // Valor predeterminado si el campo está vacío
-                        const image = document.getElementById('barcodeImage');
-                        image.src = `generarCodigoBarras.php?codigo=${codigo}`;
-                        image.style.display = 'block';
-                    }
-                </script>
+                <a class="btn btn-secondary btn-md" href="generarCode.php">Generar codigo</a>
             </div>
         </div>
     </form>

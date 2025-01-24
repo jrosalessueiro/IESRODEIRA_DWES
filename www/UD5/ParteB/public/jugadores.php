@@ -7,6 +7,13 @@ require __DIR__ . '/../src/header.php';
 require __DIR__ . '/../src/alert.php';
 
 $jugadores = getAllPlayers();
+
+function printCode(string $code): string {
+    $d = new \Milon\Barcode\DNS1D();
+    $d->setStorPath(__DIR__.'/../cache/');
+
+    return $d->getBarcodeHTML($code, 'EAN13');
+}
 ?>
 
 <!-- Contenido de la pagina -->
@@ -32,9 +39,9 @@ $jugadores = getAllPlayers();
             <tr>
                 <!-- Enlace al detalle del producto, pasando su ID como parámetro -->
                 <td><?= htmlspecialchars($jugador['apellidos'] . ', ' . $jugador['nombre']) ?></td>
-                <td><?= htmlspecialchars($jugador['posicion']) ?></td>
+                <td><?= htmlspecialchars(getPositionByCod($jugador['posicion'])['nombre']) ?></td>
                 <td><?= $jugador['dorsal'] ? htmlspecialchars($jugador['dorsal']) : 'Sin Asignar' ?></td>
-                <td><?= htmlspecialchars($jugador['code']) ?></td>
+                <td><?= printCode($jugador['code']) ?></td>
             </tr>
         <?php } ?>
         </tbody>

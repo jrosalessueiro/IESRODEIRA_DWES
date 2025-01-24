@@ -1,6 +1,10 @@
 <!-- Muestra una alerta si la pagina define la variable $alert -->
-<?php if (isset($alert)) { ?>
-    <div class="alert alert-<?= $alert['type'] ?>" role="alert">
-        <?= $alert['message'] ?>
+<?php
+if (isset($_SESSION['alert'])) { ?>
+    <div class="alert alert-<?= $_SESSION['alert']['type'] ?>" role="alert">
+        <?= $_SESSION['alert']['message'] ?>
     </div>
-<?php } ?>
+<?php 
+} 
+unset($_SESSION['alert']);
+?>
