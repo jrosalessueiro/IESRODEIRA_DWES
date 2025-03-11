@@ -114,7 +114,7 @@ class Jugador
         
         // Preparamos la consulta SQL para insertar los datos del jugador
         $stmt = $pdo->prepare('
-            INSERT INTO jugadores (nombre, apellidos, dorsal, posicion, code) 
+            INSERT INTO jugadores (nombre, apellidos, dorsal, posicion, barcode) 
             VALUES (:nombre, :apellidos, :dorsal, :posicion, :code)
         ');
 
@@ -156,7 +156,7 @@ class Jugador
     public static function getPlayerByBarcode(string $code): array|false
     {
         $pdo = Conection::getConnection();
-        $stmt = $pdo->prepare('SELECT * FROM jugadores WHERE code = :code');
+        $stmt = $pdo->prepare('SELECT * FROM jugadores WHERE barcode = :code');
         $stmt->bindParam(':code', $code);
         $stmt->execute();
 

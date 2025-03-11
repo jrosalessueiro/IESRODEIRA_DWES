@@ -47,19 +47,20 @@
                         <!-- Fila para cada jugador -->
                         <td class="text-start">
                             <!-- Muestra el nombre completo del jugador (apellidos, nombre) con formato seguro -->
-                            {{ htmlspecialchars($jugador['apellidos'] . ', ' . $jugador['nombre']) }}
+                            @php // echo var_dump($jugador); @endphp
+                            @php echo htmlspecialchars($jugador['apellidos'] . ', ' . $jugador['nombre']); @endphp
                         </td>
                         <td class="text-center">
                             <!-- Muestra la posición del jugador, obtenida a través del código de posición -->
-                            {{ htmlspecialchars(getPositionByCod($jugador['posicion'])['nombre']) }}
+                            @php  echo $jugador['posicion']; @endphp
                         </td>
                         <td class="text-center">
                             <!-- Muestra el dorsal del jugador o "Sin Asignar" si no tiene dorsal asignado -->
-                            {{ $jugador['dorsal'] ? htmlspecialchars($jugador['dorsal']) : 'Sin Asignar' }}
+                            @php echo $jugador['dorsal'] ? htmlspecialchars($jugador['dorsal']) : 'Sin Asignar'; @endphp
                         </td>
                         <td class="d-flex justify-content-center align-items-center">
                             <!-- Muestra el código de barras del jugador utilizando un gestor de códigos de barras -->
-                            {!! $barcodeManager->printCode(code: $jugador['code']) !!}
+                           @php echo $barcodeManager->printCode($jugador['barcode']); @endphp
                         </td>
                     </tr>
                 @endforeach
