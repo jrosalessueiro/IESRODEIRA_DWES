@@ -1,0 +1,24 @@
+{
+    "name": "pepe/parte-b",
+    "description": "Tarea UD5 DWES PArte B",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Dwes5B\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "joserosalessueiro",
+            "email": "joserossue@iesrodeira.gal"
+        }
+    ],
+    "require": {
+        "milon/barcode": "^11.0",
+        "fakerphp/faker": "^1.24",
+        "jenssegers/blade": "^2.0",
+        "illuminate/view": "10.48.10"
+        
+    }
+}
