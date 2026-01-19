@@ -14,7 +14,7 @@ abstract class Persona
     protected string $direccion;     // Dirección de la persona
     protected array $telefonos;      // Array con los números de teléfono de la persona
     protected string $sexo;          // Sexo de la persona (masculino o femenino)
-    
+
     private static int $contador = 0;  // Contador estático para llevar el registro de objetos creados
 
     /**
@@ -54,23 +54,71 @@ abstract class Persona
     }
 
     // Métodos getter (acceso a las propiedades)
-    public function getNombre(): string { return $this->nombre; }
-    public function getApellido1(): string { return $this->apellido1; }
-    public function getApellido2(): string { return $this->apellido2; }
-    public function getFechaNacimiento(): string { return $this->fechaNacimiento; }
-    public function getDni(): string { return $this->dni; }
-    public function getDireccion(): string { return $this->direccion; }
-    public function getTelefonos(): array { return $this->telefonos; }
-    public function getSexo(): string { return $this->sexo; }
+    public function getNombre(): string
+    {
+        return $this->nombre;
+    }
+    public function getApellido1(): string
+    {
+        return $this->apellido1;
+    }
+    public function getApellido2(): string
+    {
+        return $this->apellido2;
+    }
+    public function getFechaNacimiento(): string
+    {
+        return $this->fechaNacimiento;
+    }
+    public function getDni(): string
+    {
+        return $this->dni;
+    }
+    public function getDireccion(): string
+    {
+        return $this->direccion;
+    }
+    public function getTelefonos(): array
+    {
+        return $this->telefonos;
+    }
+    public function getSexo(): string
+    {
+        return $this->sexo;
+    }
 
     // Métodos setter (modificación de las propiedades)
-    public function setNombre(string $nombre) { $this->nombre = $nombre; }
-    public function setApellido1(string $apellido1): void { $this->apellido1 = $apellido1; }
-    public function setApellido2(string $apellido2): void { $this->apellido2 = $apellido2; }
-    public function setFechaNacimiento(string $fechaNacimiento): void { $this->fechaNacimiento = $fechaNacimiento; }
-    public function setDni(string $dni): void { $this->dni = $dni; }
-    public function setDireccion(string $direccion): void { $this->direccion = $direccion; }
-    public function setSexo(string $sexo): void { $this->sexo = $sexo; }
+    public function setNombre(string $nombre)
+    {
+        $this->nombre = $nombre;
+    }
+    public function setApellido1(string $apellido1): void
+    {
+        $this->apellido1 = $apellido1;
+    }
+    public function setApellido2(string $apellido2): void
+    {
+        $this->apellido2 = $apellido2;
+    }
+    public function setFechaNacimiento(string $fechaNacimiento): void
+    {
+        $this->fechaNacimiento = $fechaNacimiento;
+    }
+    public function setDni(string $dni): void
+    {
+        $this->dni = $dni;
+    }
+    public function setDireccion(string $direccion): void
+    {
+        $this->direccion = $direccion;
+    }
+    public function setSexo(string $sexo): void
+    {
+        $this->sexo = $sexo;
+    }
+
+
+    abstract public function trabajar(): string;
 
     /**
      * Método estático para obtener el número total de objetos Persona creados.
@@ -173,7 +221,8 @@ class Administrativo extends Persona
      * 
      * @return self Instancia de un administrativo generado aleatoriamente.
      */
-    public static function generarAlAzar(): self {
+    public static function generarAlAzar(): self
+    {
         // Listas de valores aleatorios para cada atributo
         $nombres = ["José", "Lucía", "María", "David", "Juan", "Carlos", "Ana", "Pedro", "Laura", "Raúl"];
         $apellidos = ["Ramírez", "González", "López", "Martínez", "Pérez", "Sánchez", "Rodríguez", "García", "Fernández", "Moreno"];
@@ -215,7 +264,7 @@ class Administrativo extends Persona
      * 
      * @return int Número de objetos Administrativo creados.
      */
-    public static function numeroObjetosCreados(): int
+    public static function numeroObjetosCreado(): int
     {
         return self::$contador;
     }
@@ -280,19 +329,39 @@ class Conserje extends Persona
     }
 
     // Método estático que genera un objeto Conserje al azar con datos predefinidos
-    public static function generarAlAzar(): self {
-        $nombres = ["José", "Lucía", "María", "David", "Juan","Carlos", "Ana", "Pedro", "Laura", "Raúl"];
-        $apellidos = ["Ramírez", "González", "López", "Martínez", "Pérez","Sánchez", "Rodríguez", "García", "Fernández", "Moreno"];
+    public static function generarAlAzar(): self
+    {
+        $nombres = ["José", "Lucía", "María", "David", "Juan", "Carlos", "Ana", "Pedro", "Laura", "Raúl"];
+        $apellidos = ["Ramírez", "González", "López", "Martínez", "Pérez", "Sánchez", "Rodríguez", "García", "Fernández", "Moreno"];
         $fechaNacimiento = date("Y-m-d", rand(strtotime("2000-01-01"), strtotime("2004-12-31")));
         $dni = rand(10000000, 99999999) . chr(rand(65, 90));
-        $direcciones = ["Calle Mayor 5", "Calle de la Estrella 30", "Avenida de la Constitución 12","Calle del Sol 45",
-         "Calle Luna 7", "Avenida de la Paz 9","Calle del Prado 3", "Calle del Río 21", "Plaza España 4", "Calle del Carmen 8"];
+        $direcciones = [
+            "Calle Mayor 5",
+            "Calle de la Estrella 30",
+            "Avenida de la Constitución 12",
+            "Calle del Sol 45",
+            "Calle Luna 7",
+            "Avenida de la Paz 9",
+            "Calle del Prado 3",
+            "Calle del Río 21",
+            "Plaza España 4",
+            "Calle del Carmen 8"
+        ];
         $telefonos = [
-            "634567890", "647890123", "612345678", "678901234","699123456", "634512345", "630987654", "675432109","631234567",
-             "649876543"];
+            "634567890",
+            "647890123",
+            "612345678",
+            "678901234",
+            "699123456",
+            "634512345",
+            "630987654",
+            "675432109",
+            "631234567",
+            "649876543"
+        ];
         $sexos = ["masculino", "femenino"];
         $sexo = $sexos[array_rand($sexos)];
-        $aniosServicio = rand(1, 100);  
+        $aniosServicio = rand(1, 100);
 
         return new self(
             $nombres[array_rand($nombres)],
@@ -315,7 +384,7 @@ class Conserje extends Persona
     }
 
     // Método estático que devuelve el número de objetos Conserje creados
-    public static function numeroObjetosCreados(): int
+    public static function numeroObjetosCreado(): int
     {
         return self::$contador;
     }
@@ -369,19 +438,39 @@ class PersonalDeLimpieza extends Persona
     }
 
     // Método estático que genera un objeto PersonalDeLimpieza al azar con datos predefinidos
-    public static function generarAlAzar(): self {
-        $nombres = ["José", "Lucía", "María", "David", "Juan","Carlos", "Ana", "Pedro", "Laura", "Raúl"];
-        $apellidos = ["Ramírez", "González", "López", "Martínez", "Pérez","Sánchez", "Rodríguez", "García", "Fernández", "Moreno"];
+    public static function generarAlAzar(): self
+    {
+        $nombres = ["José", "Lucía", "María", "David", "Juan", "Carlos", "Ana", "Pedro", "Laura", "Raúl"];
+        $apellidos = ["Ramírez", "González", "López", "Martínez", "Pérez", "Sánchez", "Rodríguez", "García", "Fernández", "Moreno"];
         $fechaNacimiento = date("Y-m-d", rand(strtotime("2000-01-01"), strtotime("2004-12-31")));
         $dni = rand(10000000, 99999999) . chr(rand(65, 90));
-        $direcciones = ["Calle Mayor 5", "Calle de la Estrella 30", "Avenida de la Constitución 12","Calle del Sol 45",
-         "Calle Luna 7", "Avenida de la Paz 9","Calle del Prado 3", "Calle del Río 21", "Plaza España 4", "Calle del Carmen 8"];
+        $direcciones = [
+            "Calle Mayor 5",
+            "Calle de la Estrella 30",
+            "Avenida de la Constitución 12",
+            "Calle del Sol 45",
+            "Calle Luna 7",
+            "Avenida de la Paz 9",
+            "Calle del Prado 3",
+            "Calle del Río 21",
+            "Plaza España 4",
+            "Calle del Carmen 8"
+        ];
         $telefonos = [
-            "634567890", "647890123", "612345678", "678901234","699123456", "634512345", "630987654", "675432109","631234567",
-             "649876543"];
+            "634567890",
+            "647890123",
+            "612345678",
+            "678901234",
+            "699123456",
+            "634512345",
+            "630987654",
+            "675432109",
+            "631234567",
+            "649876543"
+        ];
         $sexos = ["masculino", "femenino"];
         $sexo = $sexos[array_rand($sexos)];
-        $aniosServicio = rand(1, 100); 
+        $aniosServicio = rand(1, 100);
 
         return new self(
             $nombres[array_rand($nombres)],
@@ -404,12 +493,14 @@ class PersonalDeLimpieza extends Persona
     }
 
     // Método estático que devuelve el número de objetos PersonalDeLimpieza creados
-    public static function numeroObjetosCreados(): int{
+    public static function numeroObjetosCreado(): int
+    {
         return self::$contador;
     }
 
     // Método mágico __toString que devuelve una representación en cadena del objeto
-    public function __toString(): string{
+    public function __toString(): string
+    {
         return parent::__toString() . ", con {$this->aniosServicio} años de servicio como personal de limpieza.";
     }
 }
@@ -420,6 +511,9 @@ class Profesor extends Persona
     private int $aniosServicio;
     private array $materias;
     private string $cargo;
+
+    private static int $contador = 0;
+
 
     public const CARGOS_VALIDOS = [
         "ninguno",
@@ -456,41 +550,68 @@ class Profesor extends Persona
         $this->aniosServicio = $aniosServicio;
         $this->materias = $materias;
         $this->cargo = $cargo;
+        self::$contador++;
     }
 
-    public function getAniosServicio(): int{
+    public function getAniosServicio(): int
+    {
         return $this->aniosServicio;
     }
-    public function getMaterias(): array{
+    public function getMaterias(): array
+    {
         return $this->materias;
     }
-    public function getCargo(): string{
+    public function getCargo(): string
+    {
         return $this->cargo;
     }
 
-    public function setAniosServicio(int $aniosServicio): void{
+    public function setAniosServicio(int $aniosServicio): void
+    {
         $this->aniosServicio = $aniosServicio;
     }
-    public function setMaterias(array $materias): void{
+    public function setMaterias(array $materias): void
+    {
         $this->materias = $materias;
     }
-    public function setCargo(string $cargo): void{
+    public function setCargo(string $cargo): void
+    {
         if (!in_array($cargo, self::CARGOS_VALIDOS, true)) {
             throw new InvalidArgumentException("Cargo no permitido: $cargo");
         }
         $this->cargo = $cargo;
     }
 
-    public static function generarAlAzar(): self{
-        $nombres = ["José", "Lucía", "María", "David", "Juan","Carlos", "Ana", "Pedro", "Laura", "Raúl"];
-        $apellidos = ["Ramírez", "González", "López", "Martínez", "Pérez","Sánchez", "Rodríguez", "García", "Fernández", "Moreno"];
+    public static function generarAlAzar(): self
+    {
+        $nombres = ["José", "Lucía", "María", "David", "Juan", "Carlos", "Ana", "Pedro", "Laura", "Raúl"];
+        $apellidos = ["Ramírez", "González", "López", "Martínez", "Pérez", "Sánchez", "Rodríguez", "García", "Fernández", "Moreno"];
         $fechaNacimiento = date("Y-m-d", rand(strtotime("2000-01-01"), strtotime("2004-12-31")));
         $dni = rand(10000000, 99999999) . chr(rand(65, 90));
-                $direcciones = ["Calle Mayor 5", "Calle de la Estrella 30", "Avenida de la Constitución 12","Calle del Sol 45",
-         "Calle Luna 7", "Avenida de la Paz 9","Calle del Prado 3", "Calle del Río 21", "Plaza España 4", "Calle del Carmen 8"];
+        $direcciones = [
+            "Calle Mayor 5",
+            "Calle de la Estrella 30",
+            "Avenida de la Constitución 12",
+            "Calle del Sol 45",
+            "Calle Luna 7",
+            "Avenida de la Paz 9",
+            "Calle del Prado 3",
+            "Calle del Río 21",
+            "Plaza España 4",
+            "Calle del Carmen 8"
+        ];
         $telefonos = [
-            "634567890", "647890123", "612345678", "678901234","699123456", "634512345", "630987654", "675432109","631234567",
-             "649876543"];
+            "634567890",
+            "647890123",
+            "612345678",
+            "678901234",
+            "699123456",
+            "634512345",
+            "630987654",
+            "675432109",
+            "631234567",
+            "649876543"
+        ];
         $sexos = ["masculino", "femenino"];
         $sexo = $sexos[array_rand($sexos)];
         $cargos = [
@@ -520,18 +641,26 @@ class Profesor extends Persona
         );
     }
 
-    public function trabajar(): string{
+    public function trabajar(): string
+    {
         $pronombre = $this->sexo === "masculino" ? "Soy un profesor" : "Soy una profesora";
         return "$pronombre con cargo de $this->cargo y estoy dando clase.";
     }
 
-    public function __toString(): string{
+    public function __toString(): string
+    {
         $materiasStr = implode(", ", $this->materias); // Convierte el array de materias en un string
         return parent::__toString() . ", con {$this->aniosServicio} años de servicio. Mi cargo es el de {$this->cargo} y las materias que imparto son {$materiasStr}.";
     }
+
+    public static function numeroObjetosCreado(): int
+    {
+        return self::$contador;
+    }
 }
 // Clase AlumnadoESO que extiende de la clase Persona
-class AlumnadoESO extends Persona{
+class AlumnadoESO extends Persona
+{
     // Propiedades privadas
     private string $curso; // Curso del alumno
     private string $grupo; // Grupo al que pertenece el alumno
@@ -589,17 +718,37 @@ class AlumnadoESO extends Persona{
     }
 
     // Método estático que genera un objeto de forma aleatoria
-    public static function generarAlAzar(): self {
+    public static function generarAlAzar(): self
+    {
         // Definición de arrays con posibles valores
-        $nombres = ["José", "Lucía", "María", "David", "Juan","Carlos", "Ana", "Pedro", "Laura", "Raúl"];
-        $apellidos = ["Ramírez", "González", "López", "Martínez", "Pérez","Sánchez", "Rodríguez", "García", "Fernández", "Moreno"];
+        $nombres = ["José", "Lucía", "María", "David", "Juan", "Carlos", "Ana", "Pedro", "Laura", "Raúl"];
+        $apellidos = ["Ramírez", "González", "López", "Martínez", "Pérez", "Sánchez", "Rodríguez", "García", "Fernández", "Moreno"];
         $fechaNacimiento = date("Y-m-d", rand(strtotime("2000-01-01"), strtotime("2004-12-31"))); // Fecha de nacimiento aleatoria
         $dni = rand(10000000, 99999999) . chr(rand(65, 90)); // DNI aleatorio
-        $direcciones = ["Calle Mayor 5", "Calle de la Estrella 30", "Avenida de la Constitución 12","Calle del Sol 45",
-         "Calle Luna 7", "Avenida de la Paz 9","Calle del Prado 3", "Calle del Río 21", "Plaza España 4", "Calle del Carmen 8"];
+        $direcciones = [
+            "Calle Mayor 5",
+            "Calle de la Estrella 30",
+            "Avenida de la Constitución 12",
+            "Calle del Sol 45",
+            "Calle Luna 7",
+            "Avenida de la Paz 9",
+            "Calle del Prado 3",
+            "Calle del Río 21",
+            "Plaza España 4",
+            "Calle del Carmen 8"
+        ];
         $telefonos = [
-            "634567890", "647890123", "612345678", "678901234","699123456", "634512345", "630987654", "675432109","631234567",
-             "649876543"];
+            "634567890",
+            "647890123",
+            "612345678",
+            "678901234",
+            "699123456",
+            "634512345",
+            "630987654",
+            "675432109",
+            "631234567",
+            "649876543"
+        ];
         $sexos = ["masculino", "femenino"];
         $sexo = $sexos[array_rand($sexos)]; // Sexo aleatorio
         $curso = "ESO " . rand(1, 4); // Curso aleatorio de ESO (1 a 4)
@@ -626,11 +775,11 @@ class AlumnadoESO extends Persona{
         // Determina el pronombre según el sexo del alumno
         $pronombre = $this->sexo === "masculino" ? "Soy un alumno" : "Soy una alumna";
         // Devuelve la descripción del alumno
-        return "$pronombre de {$this->curso}, grupo {$this->grupo}.";
+        return "$pronombre de {$this->curso}, grupo {$this->grupo} y estoy estudiando.";
     }
 
     // Método estático que devuelve el número de objetos creados
-    public static function numeroObjetosCreados(): int
+    public static function numeroObjetosCreado(): int
     {
         return self::$contador;
     }
@@ -646,7 +795,7 @@ class AlumnadoESO extends Persona{
 // Clase AlumnadoBachillerato que extiende de la clase Persona
 class AlumnadoBachillerato extends Persona
 {
-    private string $curso; // Curso de Bachillerato
+    private int $curso; // Curso de Bachillerato
     private string $grupo; // Grupo de Bachillerato
     private static int $contador = 0; // Contador de objetos creados
 
@@ -660,7 +809,7 @@ class AlumnadoBachillerato extends Persona
         string $direccion,
         array $telefonos,
         string $sexo,
-        string $curso,
+        int $curso,
         string $grupo
     ) {
         // Llamada al constructor de la clase padre (Persona)
@@ -686,7 +835,7 @@ class AlumnadoBachillerato extends Persona
         return $this->curso;
     }
 
-    public function setCurso(string $curso): void
+    public function setCurso(int $curso): void
     {
         $this->curso = $curso;
     }
@@ -702,17 +851,37 @@ class AlumnadoBachillerato extends Persona
     }
 
     // Método estático que genera un objeto de forma aleatoria
-    public static function generarAlAzar(): self {
+    public static function generarAlAzar(): self
+    {
         // Definición de arrays con posibles valores
-        $nombres = ["José", "Lucía", "María", "David", "Juan","Carlos", "Ana", "Pedro", "Laura", "Raúl"];
-        $apellidos = ["Ramírez", "González", "López", "Martínez", "Pérez","Sánchez", "Rodríguez", "García", "Fernández", "Moreno"];
+        $nombres = ["José", "Lucía", "María", "David", "Juan", "Carlos", "Ana", "Pedro", "Laura", "Raúl"];
+        $apellidos = ["Ramírez", "González", "López", "Martínez", "Pérez", "Sánchez", "Rodríguez", "García", "Fernández", "Moreno"];
         $fechaNacimiento = date("Y-m-d", rand(strtotime("2000-01-01"), strtotime("2004-12-31"))); // Fecha de nacimiento aleatoria
         $dni = rand(10000000, 99999999) . chr(rand(65, 90)); // DNI aleatorio
-        $direcciones = ["Calle Mayor 5", "Calle de la Estrella 30", "Avenida de la Constitución 12","Calle del Sol 45",
-         "Calle Luna 7", "Avenida de la Paz 9","Calle del Prado 3", "Calle del Río 21", "Plaza España 4", "Calle del Carmen 8"];
+        $direcciones = [
+            "Calle Mayor 5",
+            "Calle de la Estrella 30",
+            "Avenida de la Constitución 12",
+            "Calle del Sol 45",
+            "Calle Luna 7",
+            "Avenida de la Paz 9",
+            "Calle del Prado 3",
+            "Calle del Río 21",
+            "Plaza España 4",
+            "Calle del Carmen 8"
+        ];
         $telefonos = [
-            "634567890", "647890123", "612345678", "678901234","699123456", "634512345", "630987654", "675432109","631234567",
-             "649876543"];
+            "634567890",
+            "647890123",
+            "612345678",
+            "678901234",
+            "699123456",
+            "634512345",
+            "630987654",
+            "675432109",
+            "631234567",
+            "649876543"
+        ];
         $sexos = ["masculino", "femenino"];
         $sexo = $sexos[array_rand($sexos)]; // Sexo aleatorio
         $curso = "Bachillerato " . rand(1, 2); // Curso aleatorio de Bachillerato (1 o 2)
@@ -739,11 +908,11 @@ class AlumnadoBachillerato extends Persona
         // Determina el pronombre según el sexo del alumno
         $pronombre = $this->sexo === "masculino" ? "Soy un alumno" : "Soy una alumna";
         // Devuelve la descripción del alumno
-        return "$pronombre de {$this->curso}, grupo {$this->grupo}.";
+        return "$pronombre de {$this->curso}, grupo {$this->grupo} y estoy estudiando.";
     }
 
     // Método estático que devuelve el número de objetos creados
-    public static function numeroObjetosCreados(): int
+    public static function numeroObjetosCreado(): int
     {
         return self::$contador;
     }
@@ -759,8 +928,9 @@ class AlumnadoBachillerato extends Persona
 // Clase AlumnadoFP que extiende de la clase Persona
 class AlumnadoFP extends Persona
 {
-    private string $curso; // Curso de Formación Profesional
-    private string $modulo; // Módulo que está cursando el alumno
+    private int $curso; // Curso de Formación Profesional
+    private string $cicloFormativo; // Ciclo formativo que está cursando el alumno
+    private string $grupo; // Grupo del alumno
     private static int $contador = 0; // Contador de objetos creados
 
     // Constructor que inicializa todos los atributos de la clase
@@ -773,8 +943,9 @@ class AlumnadoFP extends Persona
         string $direccion,
         array $telefonos,
         string $sexo,
-        string $curso,
-        string $modulo
+        string $cicloFormativo,
+        int $curso,
+        string $grupo
     ) {
         // Llamada al constructor de la clase padre (Persona)
         parent::__construct(
@@ -789,47 +960,81 @@ class AlumnadoFP extends Persona
         );
         // Inicialización de las propiedades de la clase hija
         $this->curso = $curso;
-        $this->modulo = $modulo;
+        $this->cicloFormativo = $cicloFormativo;
+        $this->grupo = $grupo;
+
         self::$contador++; // Incrementa el contador de objetos creados
     }
 
     // Métodos getter y setter para las propiedades curso y módulo
-    public function getCurso(): string
+    public function getCurso(): int
     {
         return $this->curso;
     }
 
-    public function setCurso(string $curso): void
+    public function setCurso(int $curso): void
     {
         $this->curso = $curso;
     }
 
-    public function getModulo(): string
+    public function getCicloFormativo(): string
     {
-        return $this->modulo;
+        return $this->cicloFormativo;
     }
 
-    public function setModulo(string $modulo): void
+    public function setCicloFormativo(string $cicloFormativo): void
     {
-        $this->modulo = $modulo;
+        $this->cicloFormativo = $cicloFormativo;
+    }
+    public function getGrupo(): string
+    {
+        return $this->grupo;
+    }
+
+    public function setGrupo(string $grupo): void
+    {
+        $this->grupo = $grupo;
     }
 
     // Método estático que genera un objeto de forma aleatoria
-    public static function generarAlAzar(): self {
+    public static function generarAlAzar(): self
+    {
         // Definición de arrays con posibles valores
         $nombres = ["José", "Lucía", "María", "David", "Juan", "Carlos", "Ana", "Pedro", "Laura", "Raúl"];
         $apellidos = ["Ramírez", "González", "López", "Martínez", "Pérez", "Sánchez", "Rodríguez", "García", "Fernández", "Moreno"];
         $fechaNacimiento = date("Y-m-d", rand(strtotime("2000-01-01"), strtotime("2004-12-31"))); // Fecha de nacimiento aleatoria
         $dni = rand(10000000, 99999999) . chr(rand(65, 90)); // DNI aleatorio
-        $direcciones = ["Calle Mayor 5", "Calle de la Estrella 30", "Avenida de la Constitución 12", "Calle del Sol 45",
-         "Calle Luna 7", "Avenida de la Paz 9", "Calle del Prado 3", "Calle del Río 21", "Plaza España 4", "Calle del Carmen 8"];
+        $direcciones = [
+            "Calle Mayor 5",
+            "Calle de la Estrella 30",
+            "Avenida de la Constitución 12",
+            "Calle del Sol 45",
+            "Calle Luna 7",
+            "Avenida de la Paz 9",
+            "Calle del Prado 3",
+            "Calle del Río 21",
+            "Plaza España 4",
+            "Calle del Carmen 8"
+        ];
         $telefonos = [
-            "634567890", "647890123", "612345678", "678901234", "699123456", "634512345", "630987654", "675432109", "631234567",
-             "649876543"];
+            "634567890",
+            "647890123",
+            "612345678",
+            "678901234",
+            "699123456",
+            "634512345",
+            "630987654",
+            "675432109",
+            "631234567",
+            "649876543"
+        ];
         $sexos = ["masculino", "femenino"];
         $sexo = $sexos[array_rand($sexos)]; // Sexo aleatorio
-        $curso = "FP " . rand(1, 2); // Curso aleatorio de Formación Profesional (1 o 2)
-        $modulo = ["Desarrollo Web", "Redes Informáticas", "Mecatrónica", "Electricidad"][array_rand(["Desarrollo Web", "Redes Informáticas", "Mecatrónica", "Electricidad"])]; // Módulo aleatorio
+        $ciclos = ["DAW", "ASIR", "SMR", "DAM"];
+        $cicloFormativo = $ciclos[array_rand($ciclos)];
+
+        $curso = rand(1, 2); // Curso aleatorio de Formación Profesional (1 o 2)
+        $grupo = ["A", "B", "C"][array_rand(["A", "B", "C"])];
 
         // Creación del objeto con valores aleatorios
         return new self(
@@ -841,8 +1046,9 @@ class AlumnadoFP extends Persona
             $direcciones[array_rand($direcciones)],
             [$telefonos[array_rand($telefonos)]],
             $sexo,
+            $cicloFormativo,
             $curso,
-            $modulo
+            $grupo
         );
     }
 
@@ -852,11 +1058,11 @@ class AlumnadoFP extends Persona
         // Determina el pronombre según el sexo del alumno
         $pronombre = $this->sexo === "masculino" ? "Soy un alumno" : "Soy una alumna";
         // Devuelve la descripción del alumno
-        return "$pronombre de {$this->curso}, módulo {$this->modulo}.";
+        return "$pronombre de FP {$this->cicloFormativo}, curso {$this->curso}, grupo {$this->grupo} y estoy estudiando.";
     }
 
     // Método estático que devuelve el número de objetos creados
-    public static function numeroObjetosCreados(): int
+    public static function numeroObjetosCreado(): int
     {
         return self::$contador;
     }
@@ -865,6 +1071,6 @@ class AlumnadoFP extends Persona
     public function __toString(): string
     {
         // Llama al método __toString() de la clase padre y agrega información adicional
-        return parent::__toString() . ", estudiante de {$this->curso}, módulo {$this->modulo}.";
+        return parent::__toString() . ", estudiante de FP {$this->cicloFormativo}, curso {$this->curso}, grupo {$this->grupo}.";
     }
 }
