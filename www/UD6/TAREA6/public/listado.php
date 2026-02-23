@@ -79,13 +79,13 @@ if (isset($_POST['comprar'])) {
                     // Celda de Acciones (Añadir y Tiendas)
                     echo "<td class='text-center'>";
 
-                    // Formulario de Añadir (Usamos d-inline para que no salte de línea)
+                    // Formulario de Añadir 
                     echo "<form action='{$_SERVER['PHP_SELF']}' method='POST' class='d-inline'>";
                     echo "<input type='hidden' name='id' value='{$filas->id}'>";
                     echo "<input type='submit' class='btn btn-primary' name='comprar' value='Añadir'>";
                     echo "</form>";
 
-                    // Botón Tiendas (ms-2 añade un pequeño margen a la izquierda)
+                    // Botón Tiendas 
                     echo "<a href='tiendas.php?id={$filas->id}' class='btn btn-info ml-2'>Tiendas</a>";
 
                     echo "</td>";
