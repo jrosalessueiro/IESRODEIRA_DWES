@@ -1,0 +1,16 @@
+{
+    "name": "pepe/tarea6",
+    "description": "Tarea 6 de la UD6 DWES",
+    "autoload": {
+        "psr-4": {
+            "Pepe\\Tarea6\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "joserosalessueiro",
+            "email": "joserossue@iesrodeira.gal"
+        }
+    ],
+    "require": {}
+}
