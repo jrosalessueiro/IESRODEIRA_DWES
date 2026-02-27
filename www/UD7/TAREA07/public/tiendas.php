@@ -18,7 +18,7 @@ try {
 
     // 5. Carga de las clases del Servicio SOAP (Asegúrate de que el nombre del archivo sea correcto)
     // Normalmente el WSDL genera un archivo con este nombre:
-    require_once __DIR__ . '/../ClasesOperacionesTarea06Service.php';
+    require_once __DIR__ . '/../ClasesOperacionesTarea07Service.php';
 
     // Instanciar el servicio
     $service = new ClasesOperacionesTarea06Service();

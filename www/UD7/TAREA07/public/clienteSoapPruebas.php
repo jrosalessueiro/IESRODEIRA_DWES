@@ -1,6 +1,6 @@
 <?php
 // TAREA6/public/clienteSoapPruebas.php
-require_once __DIR__ . '/../ClasesOperacionesTarea06Service.php';
+require_once __DIR__ . '/../ClasesOperacionesTarea07Service.php';
 
 $idProducto = 1; // ID para probar
 $service = new ClasesOperacionesTarea06Service();
