@@ -1,4 +1,20 @@
 <?php
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../src/AjaxTiendas.php';
+
+use function Jaxon\jaxon;
+
+// Creamos instancia Jaxon
+$jaxon = jaxon();
+
+// Registramos la clase AjaxTiendas
+$jaxon->register(Jaxon\ClassComponent::class, AjaxTiendas::class);
+
+// Procesamos la petición AJAX si existe
+if ($jaxon->canProcessRequest()) {
+    $jaxon->processRequest();
+    exit;
+}
 session_start();
 if (!isset($_SESSION['nombre'])) {
     header('Location:login.php');
@@ -17,6 +33,7 @@ try {
 <html lang="es">
 
 <head>
+    <?php echo $jaxon->getScript(); ?>
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -27,7 +44,7 @@ try {
     <!-- css Fontawesome CDN-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <title>Tema 4</title>
+    <title>Tema 7</title>
 </head>
 <?php
 if (isset($_POST['vaciar'])) {
@@ -85,8 +102,9 @@ if (isset($_POST['comprar'])) {
                     echo "<input type='submit' class='btn btn-primary' name='comprar' value='Añadir'>";
                     echo "</form>";
 
-                    // Botón Tiendas 
-                    echo "<a href='tiendas.php?id={$filas->id}' class='btn btn-info ml-2'>Tiendas</a>";
+                    // Botón nuevo con JAXON 
+                    echo "<button onclick='jaxon_AjaxTiendas.listarTiendas({$filas->id})' 
+                    class='btn btn-info ml-2'>Listar Tiendas</button>";
 
                     echo "</td>";
 
@@ -109,6 +127,29 @@ if (isset($_POST['comprar'])) {
                 ?>
             </tbody>
         </table>
+
+    </div>
+    <!-- Popup oculto -->
+    <div id="popup" style="
+    display:none;
+    position:fixed;
+    top:20%;
+    left:30%;
+    width:40%;
+    background:white;
+    border:2px solid black;
+    padding:20px;
+    box-shadow:0px 0px 10px gray;
+    z-index:9999;">
+
+        <div id="popupContenido"></div>
+
+        <br>
+
+        <button class="btn btn-danger"
+            onclick="document.getElementById('popup').style.display='none'">
+            Cerrar
+        </button>
 
     </div>
 </body>
