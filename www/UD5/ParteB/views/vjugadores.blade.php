@@ -51,7 +51,7 @@
                         </td>
                         <td class="text-center">
                             <!-- Muestra la posición del jugador, obtenida a través del código de posición -->
-                            {{ htmlspecialchars(getPositionByCod($jugador['posicion'])['nombre']) }}
+                            {{ htmlspecialchars(getPositionByCod($jugador['posicion'])) }}
                         </td>
                         <td class="text-center">
                             <!-- Muestra el dorsal del jugador o "Sin Asignar" si no tiene dorsal asignado -->
@@ -59,7 +59,7 @@
                         </td>
                         <td class="d-flex justify-content-center align-items-center">
                             <!-- Muestra el código de barras del jugador utilizando un gestor de códigos de barras -->
-                            {!! $barcodeManager->printCode(code: $jugador['code']) !!}
+                            {{ $barcodeManager->printCode(code: $jugador['barcode']) }}
                         </td>
                     </tr>
                 @endforeach

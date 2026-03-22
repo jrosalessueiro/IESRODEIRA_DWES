@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL & ~E_DEPRECATED);
 
 // Importa la clase BarcodeManager (gestión de códigos de barras)
 use Dwes5B\BarcodeManager;
